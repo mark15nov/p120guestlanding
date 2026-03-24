@@ -78,7 +78,7 @@ export function GlobeInteractive({
         baseColor: [0.96, 0.96, 0.95],
         markerColor: [0.15, 0.62, 0.21],
         glowColor: [1, 1, 1],
-        opacity: 0.95,
+        opacity: 0.4,
         markerElevation: 0.02,
         markers: markers.map((marker) => ({
           location: marker.location,
