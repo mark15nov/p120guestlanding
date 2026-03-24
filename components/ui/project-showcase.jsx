@@ -138,25 +138,10 @@ export function ProjectShowcase({ projects = defaultProjects, className = "" }) 
           opacity: 1;
         }
         .product-showcase-preview {
-          pointer-events: none;
-          position: fixed;
-          z-index: 60;
-          width: 320px;
-          aspect-ratio: 16 / 10;
-          overflow: hidden;
-          border-radius: 22px;
-          opacity: 0;
-          scale: 0.92;
-          transition: opacity 240ms ease, scale 240ms ease;
-          box-shadow: 0 30px 70px rgba(25,23,18,0.16);
-          border: 1px solid rgba(255,255,255,0.76);
-          background: #f4f4f1;
-          backdrop-filter: blur(14px);
-          -webkit-backdrop-filter: blur(14px);
+          display: none;
         }
         .product-showcase-preview.is-visible {
-          opacity: 1;
-          scale: 1;
+          display: none;
         }
         .product-showcase-preview img {
           position: absolute;
