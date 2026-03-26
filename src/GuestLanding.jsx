@@ -698,7 +698,7 @@ const styles = `
   .features {
     position: relative;
     z-index: 5;
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 80px 48px 40px;
   }
@@ -713,12 +713,14 @@ const styles = `
   /* ── Product row ── */
   .product-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
+    grid-template-columns: minmax(0, 420px) minmax(0, 480px);
+    gap: 32px;
     align-items: center;
+    justify-content: center;
     padding: 60px 0;
   }
 
+  .product-row.reverse { grid-template-columns: minmax(0, 480px) minmax(0, 420px); }
   .product-row.reverse .product-info { order: 2; }
   .product-row.reverse .product-mockup { order: 1; }
 
@@ -3451,18 +3453,7 @@ export default function GuestLanding() {
 
           {/* ── CHAT ── */}
           <Reveal delay={0.05}>
-            <div className="product-row">
-              <div className="product-info">
-                <div className="product-badge">24/7</div>
-                <h3 className="product-name">Profit CHAT</h3>
-                <p className="product-desc">Tu consultor IA disponible a cualquier hora. Adjunta archivos, pide análisis, resuelve dudas, con contexto de tu empresa.</p>
-                <div className="product-features-list">
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Chat especializado en PYMES</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Adjunta archivos para análisis instantáneo</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> La IA ya conoce el contexto de tu empresa</div>
-                </div>
-                <a href="https://www.plataforma.profit120.com/app/chatbot" className="module-mini-link" target="_blank" rel="noopener noreferrer">Accede sin costo →</a>
-              </div>
+            <div className="product-row reverse">
               <div className="product-mockup">
                 <div className="mockup-bar">
                   <span className="mockup-dot red" /><span className="mockup-dot yellow" /><span className="mockup-dot green" />
@@ -3481,6 +3472,17 @@ export default function GuestLanding() {
                     <div className="mock-chat-suggestion"><strong>Explícame más de Profit120</strong>¡No escondemos nada!</div>
                   </div>
                 </div>
+              </div>
+              <div className="product-info">
+                <div className="product-badge">24/7</div>
+                <h3 className="product-name">Profit CHAT</h3>
+                <p className="product-desc">Tu consultor IA disponible a cualquier hora. Adjunta archivos, pide análisis, resuelve dudas, con contexto de tu empresa.</p>
+                <div className="product-features-list">
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Chat especializado en PYMES</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Adjunta archivos para análisis instantáneo</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> La IA ya conoce el contexto de tu empresa</div>
+                </div>
+                <a href="https://www.plataforma.profit120.com/app/chatbot" className="module-mini-link" target="_blank" rel="noopener noreferrer">Accede sin costo →</a>
               </div>
             </div>
           </Reveal>
@@ -3539,18 +3541,7 @@ export default function GuestLanding() {
 
           {/* ── TALKS ── */}
           <Reveal delay={0.05}>
-            <div className="product-row">
-              <div className="product-info">
-                <div className="product-badge">SEMANAL</div>
-                <h3 className="product-name">Profit TALKS</h3>
-                <p className="product-desc">El newsletter que forma criterio. Análisis, tendencias y casos reales que se aplican de inmediato. +56 ediciones.</p>
-                <div className="product-features-list">
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> +55 episodios publicados</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Casos reales de empresas LATAM</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Marcos de decisión aplicables</div>
-                </div>
-                <a href="https://www.plataforma.profit120.com/app/library" className="module-mini-link" target="_blank" rel="noopener noreferrer">Accede sin costo →</a>
-              </div>
+            <div className="product-row reverse">
               <div className="product-mockup">
                 <div className="mockup-bar">
                   <span className="mockup-dot red" /><span className="mockup-dot yellow" /><span className="mockup-dot green" />
@@ -3580,6 +3571,17 @@ export default function GuestLanding() {
                     ))}
                   </div>
                 </div>
+              </div>
+              <div className="product-info">
+                <div className="product-badge">SEMANAL</div>
+                <h3 className="product-name">Profit TALKS</h3>
+                <p className="product-desc">El newsletter que forma criterio. Análisis, tendencias y casos reales que se aplican de inmediato. +56 ediciones.</p>
+                <div className="product-features-list">
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> +55 episodios publicados</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Casos reales de empresas LATAM</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Marcos de decisión aplicables</div>
+                </div>
+                <a href="https://www.plataforma.profit120.com/app/library" className="module-mini-link" target="_blank" rel="noopener noreferrer">Accede sin costo →</a>
               </div>
             </div>
           </Reveal>
