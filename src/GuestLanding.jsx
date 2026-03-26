@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { InfiniteGridBackground } from "../components/ui/the-infinite-grid";
 
 const BRAND = {
   bg: "#ffffff",
@@ -228,6 +229,31 @@ const styles = `
     transform: translateY(-1px);
     border-color: rgba(39,201,39,0.28);
     background: rgba(39,201,39,0.04);
+  }
+
+  .nav-login {
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: ${BRAND.textPrimary};
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid ${BRAND.border};
+    background: transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .nav-login:hover {
+    border-color: rgba(25,23,18,0.25);
+    background: rgba(25,23,18,0.03);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
   }
 
   /* ── Hero ── */
@@ -790,13 +816,13 @@ const styles = `
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid ${BRAND.border};
-    box-shadow: 0 20px 60px rgba(15,23,42,0.08), 0 0 0 1px rgba(0,0,0,0.03);
+    box-shadow: none;
     transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
   }
 
   .product-mockup:hover {
     transform: translateY(-6px);
-    box-shadow: 0 30px 80px rgba(15,23,42,0.12), 0 0 0 1px rgba(39,201,39,0.08);
+    box-shadow: none;
   }
 
   .mockup-bar {
@@ -2364,7 +2390,7 @@ const styles = `
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 210px 16px 130px;
+    padding: 260px 16px 130px;
     max-width: 980px;
     grid-template-columns: unset !important;
   }
@@ -2571,7 +2597,7 @@ const styles = `
   .hero-video-modal-close:hover { background: rgba(255,255,255,0.22); }
 
   @media (max-width: 768px) {
-    .hero { padding: 140px 20px 88px; }
+    .hero { padding: 175px 20px 88px; }
     .hero-headline { font-size: clamp(38px, 9vw, 54px) !important; letter-spacing: -2px !important; }
     .hero-subtext { font-size: 15px; margin-bottom: 36px !important; }
     .btn-hero { min-width: 0; width: 100%; font-size: 17px; min-height: 62px; }
@@ -2886,33 +2912,48 @@ const styles = `
 const testimonials = [
   {
     stars: 5,
-    quote: "En 3 semanas, Profit120 ya entendía mi negocio mejor que mi contador. El análisis de flujo de caja me ahorró $47,000 pesos en decisiones que iba a tomar mal.",
-    name: "Carlos Mendoza",
-    role: "Dueño",
-    company: "Restaurante La Trattoria, CDMX",
-    result: "$47,000 pesos ahorrados",
-    initials: "CM",
-    img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face",
+    quote: "Llevaba meses tomando decisiones de compra sin datos reales. Con la herramienta de proyección de flujo de caja de BRAIN identifiqué que estaba sobrecomprando inventario un 34%. Ajusté el mes siguiente y recuperé liquidez que no sabía que tenía.",
+    name: "Dueño de restaurante",
+    role: "Giro: Alimentos y Bebidas",
+    company: "CDMX · 18 empleados",
+    result: "Liquidez recuperada en 30 días",
+    initials: "DR",
   },
   {
     stars: 5,
-    quote: "Lo probé como invitada por curiosidad. A los 5 días ya tenía a mi equipo de 8 personas usando BRAIN todos los días. La sección de finanzas sola vale la suscripción.",
-    name: "Ana López",
-    role: "Fundadora",
-    company: "NovaTienda (e-commerce), Monterrey",
-    result: "8 personas activas en 5 días",
-    initials: "AL",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face",
+    quote: "Usé el módulo de estructura de equipo para redefinir roles antes de una expansión. Detectamos duplicidad de funciones entre 3 personas — algo que llevaba 2 años sin resolverse. En una semana teníamos el organigrama nuevo funcionando.",
+    name: "Directora de operaciones",
+    role: "Giro: E-commerce",
+    company: "Monterrey · 24 empleados",
+    result: "Organigrama redefinido en 1 semana",
+    initials: "DO",
   },
   {
     stars: 5,
-    quote: "Mi agencia llevaba 2 años sin estructura financiera real. Con Profit BRAIN armé mi centro de costos y estrategia de precios en una tarde. Literal.",
-    name: "Roberto Solís",
-    role: "Director",
-    company: "Agencia Creativa Pixel, Guadalajara",
-    result: "Estructura financiera en 1 tarde",
-    initials: "RS",
-    img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face",
+    quote: "Corrí la herramienta de análisis de rentabilidad por cliente y descubrí que el 20% de mis clientes generaba el 80% del margen. Dejé de perseguir proyectos pequeños y en 45 días subí mi margen neto de 12% a 21%.",
+    name: "Director de agencia",
+    role: "Giro: Servicios de Marketing",
+    company: "Guadalajara · 11 empleados",
+    result: "Margen neto de 12% a 21%",
+    initials: "DA",
+  },
+  {
+    stars: 5,
+    quote: "Lancé mi negocio hace 8 meses y no tenía presupuesto para contratar un CFO ni un consultor. Con BRAIN armé mi modelo de precios, calculé mi punto de equilibrio y proyecté 6 meses de flujo de caja. Tomé decisiones desde el mes 1 que normalmente toman años en aprender.",
+    name: "Emprendedor en etapa temprana",
+    role: "Giro: SaaS B2B",
+    company: "Monterrey · 3 personas",
+    result: "Modelo financiero armado desde cero",
+    initials: "EE",
+  },
+  {
+    stars: 5,
+    quote: "Soy gerente de ventas en una empresa mediana y usé las herramientas de análisis de pipeline y forecasting para mi presentación trimestral. Mi director me preguntó qué consultor había contratado. Le dije que era Profit120 y se quedó callado.",
+    name: "Gerente de ventas",
+    role: "Área: Comercial",
+    company: "Empresa industrial · Monterrey",
+    result: "Forecast trimestral en 2 horas",
+    initials: "GV",
   },
 ];
 
@@ -2971,22 +3012,29 @@ export default function GuestLanding() {
           <div className="nav-logo">
             <img src="/assets/Negro-Verde.png" alt="Profit120" />
           </div>
-          <div className="nav-links">
-            <a href="#como-funciona" className="nav-link">Cómo funciona</a>
-            <a href="#productos" className="nav-link">Módulos</a>
-            <a href="#testimonios" className="nav-link">Testimonios</a>
+          <div className="nav-actions">
+            <a
+              href="https://www.plataforma.profit120.com/app/chatbot"
+              className="nav-login"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ya tengo cuenta
+            </a>
+            <a
+              href="https://www.plataforma.profit120.com/app/chatbot"
+              className="nav-cta"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Activa tu cerebro de IA <span>→</span>
+            </a>
           </div>
-          <a
-            href="https://www.plataforma.profit120.com/app/chatbot"
-            className="nav-cta"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Activa tu cerebro de IA <span>→</span>
-          </a>
         </nav>
 
         {/* Hero — centered single-column */}
+        <div style={{ position: "relative", width: "100%" }}>
+        <InfiniteGridBackground />
         <section className="hero">
           {/* 2. Headline */}
           <Reveal delay={0.05}>
@@ -2999,7 +3047,7 @@ export default function GuestLanding() {
           {/* 3. Sub-headline */}
           <Reveal delay={0.1}>
             <p className="hero-subtext">
-              Cada uso la hace más inteligente sobre tu negocio. Finanzas, ventas, marketing, operaciones y RRHH — todo en un solo lugar, para ti y todo tu equipo.
+              Profit120 te da tu propio cerebro de IA, único para tu empresa. Cada uso lo hace más inteligente sobre tu negocio. Finanzas, ventas, marketing, operaciones y RRHH — todo en un solo lugar, para ti y todo tu equipo.
             </p>
           </Reveal>
 
@@ -3012,17 +3060,9 @@ export default function GuestLanding() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Entrena el cerebro de tu empresa — 60 días gratis
+                Accede al cerebro de tu empresa - 60 días sin costo
                 <span className="btn-arrow"><ArrowCornerIcon /></span>
               </a>
-              <button className="hero-video-trigger" onClick={() => setActiveVideoId("HswRHEFk6oA")}>
-                <span className="hero-play-circle">
-                  <svg viewBox="0 0 12 12" fill={BRAND.green} width="10" height="10">
-                    <path d="M3 2l7 4-7 4V2z"/>
-                  </svg>
-                </span>
-                Ver cómo funciona (2 min)
-              </button>
             </div>
           </Reveal>
 
@@ -3030,10 +3070,12 @@ export default function GuestLanding() {
           <Reveal delay={0.2}>
             <div className="hero-trust">
               <div className="trust-item"><CheckIcon /> 60 días sin costo — sin tarjeta de crédito</div>
-              <div className="trust-item"><CheckIcon /> Todo tu equipo incluido — sin límite de usuarios</div>
+              <div className="trust-item"><CheckIcon /> Todo tu equipo incluido desde el primer día</div>
+              <div className="trust-item"><CheckIcon /> Sin necesidad de registrarte</div>
             </div>
           </Reveal>
         </section>
+        </div>
 
         {/* Video modal */}
         {activeVideoId && (
@@ -3065,7 +3107,7 @@ export default function GuestLanding() {
                 boxShadow: `0 24px 64px rgba(0,0,0,0.1), 0 0 0 1px ${BRAND.border}`,
               }}>
                 <iframe
-                  src="https://www.youtube.com/embed/HswRHEFk6oA?rel=0&modestbranding=1&playsinline=1"
+                  src="https://www.youtube.com/embed/U-vm1CTmgR8?rel=0&modestbranding=1&playsinline=1"
                   title="Profit120 — Ve cómo funciona"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -3081,7 +3123,7 @@ export default function GuestLanding() {
                   <span className="eyebrow-line" />Ve en acción
                 </div>
                 <h2 className="section-heading" style={{ textAlign: "left", marginBottom: 16 }}>
-                  2 minutos que<br />lo explican todo.
+                  3 minutos que<br />lo explican todo.
                 </h2>
                 <p style={{ fontSize: 16, color: BRAND.textSecondary, lineHeight: 1.7, marginBottom: 28 }}>
                   Ve qué es Profit120, cómo funciona su IA y por qué no es una herramienta más — es el cerebro que tu empresa necesitaba.
@@ -3090,7 +3132,6 @@ export default function GuestLanding() {
                   {[
                     "Qué son los 5 módulos y para qué sirven",
                     "Cómo la IA aprende de tu empresa con cada uso",
-                    "Por qué 60 días es todo lo que necesitas para comprobarlo",
                   ].map((point, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
                       <span style={{ width: 22, height: 22, borderRadius: "50%", background: BRAND.greenGlow, border: `1px solid ${BRAND.borderHover}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
@@ -3110,18 +3151,18 @@ export default function GuestLanding() {
           <div className="stats-strip-inner">
             <div className="stat-item">
               <span className="stat-number"><AnimatedCounter end={5} /></span>
-              <span className="stat-label">Módulos incluidos en tu prueba</span>
+              <span className="stat-label">Módulos estratégicos</span>
             </div>
             <div className="stat-item">
               <span className="stat-number"><AnimatedCounter end={60} suffix=" días" /></span>
-              <span className="stat-label">Sin costo — para todo tu equipo</span>
+              <span className="stat-label">Sin costo — para ti y todo tu equipo</span>
             </div>
             <div className="stat-item">
               <span className="stat-number"><AnimatedCounter end={24} suffix="/7" /></span>
-              <span className="stat-label">Consultor IA disponible</span>
+              <span className="stat-label">Tu cerebro en acción</span>
             </div>
             <div className="stat-item">
-              <span className="stat-number"><AnimatedCounter end={20} suffix=" min" /></span>
+              <span className="stat-number"><AnimatedCounter end={-20} suffix=" min" /></span>
               <span className="stat-label">Para resolver problemas reales</span>
             </div>
           </div>
@@ -3142,14 +3183,13 @@ export default function GuestLanding() {
             </div>
             <div className="pain-grid">
               {[
-                { icon: "🎯", title: "Decides con instinto, no con datos.", desc: "Sin información confiable, cada decisión es una apuesta." },
-                { icon: "🐢", title: "Tu contador llega tarde y cobra caro.", desc: "Para cuando recibes el reporte, el momento ya pasó." },
-                { icon: "🧩", title: "Cada área opera en silos.", desc: "Ventas, finanzas y marketing no se hablan. La empresa no funciona como sistema." },
-                { icon: "🔁", title: "ChatGPT empieza desde cero cada vez.", desc: "Eso no es inteligencia — es pérdida de tiempo disfrazada de productividad." },
+                { title: "Decides con instinto, no con datos.", desc: "Sin información confiable, cada decisión es una apuesta." },
+                { title: "Tu contador llega tarde y cobra caro.", desc: "Para cuando recibes el reporte, el momento ya pasó." },
+                { title: "Cada área opera en otro lugar.", desc: "Ventas, finanzas y marketing no se hablan. La empresa no funciona como sistema." },
+                { title: "Toddas tus IA´s empiezan desde cero cada vez.", desc: "Eso no es inteligencia, es pérdida de tiempo disfrazada de productividad." },
               ].map((p, i) => (
                 <Reveal key={i} delay={0.08 * i}>
                   <div className="pain-card">
-                    <div className="pain-icon">{p.icon}</div>
                     <div>
                       <div className="pain-title">{p.title}</div>
                       <div className="pain-desc">{p.desc}</div>
@@ -3178,7 +3218,7 @@ export default function GuestLanding() {
             </Reveal>
             <Reveal delay={0.15}>
               <p className="section-desc">
-                Con tus 60 días sin costo, desbloqueas los 5 desde el primer minuto. Y cada uno alimenta tu cerebro de IA — mientras más usas, más te conoce.
+                Con tus 60 días sin costo, desbloqueas los 5 desde el primer minuto. Y cada uno alimenta tu cerebro de IA, mientras más usas, más te conoce.
               </p>
             </Reveal>
           </div>
@@ -3250,7 +3290,7 @@ export default function GuestLanding() {
                   <span className="mockup-url">plataforma.profit120.com/app/chatbot</span>
                 </div>
                 <div className="mock-chat">
-                  <div className="mock-chat-greeting">¡Hola! 👋</div>
+                  <div className="mock-chat-greeting">¡Hola!</div>
                   <div className="mock-chat-sub">Soy el primer chat especializado para PYMES, ¿qué solución necesitas hoy?</div>
                   <div className="mock-chat-input">
                     <span>Escribe tu pregunta o adjunta archivos para analizar</span>
@@ -3266,7 +3306,7 @@ export default function GuestLanding() {
               <div className="product-info">
                 <div className="product-badge">24/7</div>
                 <h3 className="product-name">Profit CHAT</h3>
-                <p className="product-desc">Tu consultor IA disponible a cualquier hora. Adjunta archivos, pide análisis, resuelve dudas — con contexto de tu empresa.</p>
+                <p className="product-desc">Tu consultor IA disponible a cualquier hora. Adjunta archivos, pide análisis, resuelve dudas, con contexto de tu empresa.</p>
                 <div className="product-features-list">
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Chat especializado en PYMES</div>
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Adjunta archivos para análisis instantáneo</div>
@@ -3347,6 +3387,9 @@ export default function GuestLanding() {
                       { num: "#56", title: "Decisiones con datos", dur: "8 min", bg: "linear-gradient(135deg,#1e3a5f,#0f172a)" },
                       { num: "#55", title: "IA en tu operación", dur: "6 min", bg: "linear-gradient(135deg,#065f46,#022c22)" },
                       { num: "#54", title: "Finanzas sin contador", dur: "7 min", bg: "linear-gradient(135deg,#581c87,#2e1065)" },
+                      { num: "#53", title: "Cómo escalar ventas", dur: "9 min", bg: "linear-gradient(135deg,#7c2d12,#c2410c)" },
+                      { num: "#52", title: "Equipos de alto impacto", dur: "5 min", bg: "linear-gradient(135deg,#164e63,#0e7490)" },
+                      { num: "#51", title: "Precios que sí funcionan", dur: "6 min", bg: "linear-gradient(135deg,#3b0764,#7e22ce)" },
                     ].map((ep, i) => (
                       <div key={i} className="mock-talks-card">
                         <div className="mock-talks-thumb" style={{ background: ep.bg }}>
@@ -3403,6 +3446,9 @@ export default function GuestLanding() {
                       { title: "Marketing Inteligente con IA", meta: "10/10 participantes", badge: "LLENO", badgeColor: "#ef4444", bg: "linear-gradient(135deg,#7f1d1d,#b91c1c)" },
                       { title: "Rentabilidad y Control", meta: "15/15 participantes", badge: "LLENO", badgeColor: "#ef4444", bg: "linear-gradient(135deg,#1e3a5f,#1d4ed8)" },
                       { title: "Roles y Responsabilidades", meta: "4/15 participantes", badge: "DISPONIBLE", badgeColor: "#16a34a", bg: "linear-gradient(135deg,#065f46,#15803d)" },
+                      { title: "Ventas con IA", meta: "7/15 participantes", badge: "DISPONIBLE", badgeColor: "#16a34a", bg: "linear-gradient(135deg,#78350f,#d97706)" },
+                      { title: "Operaciones sin caos", meta: "12/15 participantes", badge: "DISPONIBLE", badgeColor: "#16a34a", bg: "linear-gradient(135deg,#1e1b4b,#4338ca)" },
+                      { title: "Liderazgo y Cultura", meta: "15/15 participantes", badge: "LLENO", badgeColor: "#ef4444", bg: "linear-gradient(135deg,#4a044e,#86198f)" },
                     ].map((session, i) => (
                       <div key={i} className="mock-labs-card">
                         <div className="mock-labs-card-img" style={{ background: session.bg }}>
@@ -3435,20 +3481,20 @@ export default function GuestLanding() {
               <div className="step-card">
                 <div className="step-num">1</div>
                 <h3 className="step-title">Crea tu cuenta sin costo</h3>
-                <p className="step-desc">Regístrate con tu correo. No necesitas tarjeta de crédito ni aprobación de nadie. En 2 minutos estás adentro.</p>
+                <p className="step-desc">Regístrate con tu correo. No necesitas tarjeta de crédito ni aprobación de nadie. En segundos estás adentro.</p>
               </div>
             </Reveal>
             <Reveal delay={0.1}>
               <div className="step-card">
                 <div className="step-num">2</div>
                 <h3 className="step-title">Invita a todo tu equipo</h3>
-                <p className="step-desc">Agrega a todos los que necesites. Sin límite de usuarios durante tus 60 días. Que todos empiecen a usar la plataforma — eso entrena la IA más rápido.</p>
+                <p className="step-desc">Agrega a todos los que necesites. Que todos empiecen a usar la plataforma desde el primer día, eso entrena la IA más rápido.</p>
               </div>
             </Reveal>
             <Reveal delay={0.2}>
               <div className="step-card">
                 <div className="step-num">3</div>
-                <h3 className="step-title">Usa, pregunta, decide — la IA aprende</h3>
+                <h3 className="step-title">Usa, pregunta, decide, la IA aprende</h3>
                 <p className="step-desc">Cada herramienta que usas, cada pregunta que haces, cada análisis que corres... tu cerebro de IA se vuelve más inteligente sobre tu empresa. En 60 días vas a tener un activo que ningún consultor te puede dar.</p>
               </div>
             </Reveal>
@@ -3461,44 +3507,6 @@ export default function GuestLanding() {
               </a>
             </div>
           </Reveal>
-        </section>
-
-        {/* Testimonials */}
-        <section className="testimonials" id="testimonios">
-          <div className="testimonials-header">
-            <Reveal delay={0.1}>
-              <h2 className="section-heading">
-                Empezaron con 60 días sin costo.<br />Se quedaron por los resultados.
-              </h2>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <p className="section-desc">
-                Activaron su prueba sin costo, probaron los módulos y decidieron quedarse.
-              </p>
-            </Reveal>
-          </div>
-          <div className="t-grid">
-            {testimonials.map((t, i) => (
-              <Reveal key={i} delay={0.08 * i}>
-                <div className="t-card">
-                  <div className="t-stars">{"★".repeat(t.stars)}</div>
-                  {t.result && <div className="t-result">📈 {t.result}</div>}
-                  <p className="t-quote">"{t.quote}"</p>
-                  <div className="t-author">
-                    {t.img
-                      ? <img src={t.img} alt={t.name} className="t-avatar-img" />
-                      : <div className="t-avatar">{t.initials}</div>
-                    }
-                    <div>
-                      <div className="t-name">{t.name}</div>
-                      <div className="t-role">{t.role}</div>
-                      {t.company && <div className="t-company">{t.company}</div>}
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </section>
 
         {/* ¿Para quién es? */}
@@ -3524,6 +3532,8 @@ export default function GuestLanding() {
               { title: "Directores y gerentes de área", desc: "Datos e IA para Finanzas, Marketing, Ventas y Operaciones — sin analistas." },
               { title: "Startups en crecimiento", desc: "Haz más con menos. IA especializada, sin setup ni entrenamiento." },
               { title: "Empresas que escalan sin contratar más", desc: "Automatiza antes de agregar headcount." },
+              { title: "Emprendedores en etapa temprana", desc: "Sin presupuesto para consultores, pero con las mismas decisiones complejas. Profit120 te da el criterio que normalmente toma años construir." },
+              { title: "Colaboradores que quieren hacer más", desc: "Gerentes, coordinadores y analistas que necesitan mejores herramientas para tomar decisiones y mostrar resultados sin depender de otros." },
             ].map((item, i) => (
               <Reveal key={i} delay={0.08 * i}>
                 <div className="for-whom-card">
@@ -3538,12 +3548,25 @@ export default function GuestLanding() {
           </div>
           <Reveal delay={0.1}>
             <div className="not-for-whom">
-              <div className="not-for-whom-title">No es para ti si eres...</div>
+              <div className="not-for-whom-title">No es para ti si...</div>
               <div className="not-for-list">
                 {["Buscas solución mágica sin implementar nada"].map((item, i) => (
                   <span key={i} className="not-for-item">✕ {item}</span>
                 ))}
               </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <div style={{ textAlign: "center", marginTop: 36 }}>
+              <a
+                href="https://www.plataforma.profit120.com/app/chatbot"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-hero"
+              >
+                Activa tu acceso gratis — 60 días
+                <span className="btn-arrow"><ArrowCornerIcon /></span>
+              </a>
             </div>
           </Reveal>
         </section>
@@ -3573,6 +3596,8 @@ export default function GuestLanding() {
                 { tool: "Gemini Ultra", price: "$250/mes", learns: "No" },
                 { tool: "MasterClass", price: "$240/año", learns: "No" },
                 { tool: "Udemy Business", price: "$30/mes por persona", learns: "No" },
+                { tool: "HubSpot", price: "$40/mes por usuario", learns: "No" },
+                { tool: "Monday.com", price: "$12/mes por usuario", learns: "No" },
               ].map((row, i) => (
                 <div className="comparison-row" key={i}>
                   <div className="comp-tool">{row.tool}</div>
@@ -3587,6 +3612,57 @@ export default function GuestLanding() {
               </div>
             </div>
           </Reveal>
+          <Reveal delay={0.15}>
+            <div style={{ textAlign: "center", marginTop: 36 }}>
+              <a
+                href="https://www.plataforma.profit120.com/app/chatbot"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-hero"
+              >
+                Pruébalo gratis — 60 días sin costo
+                <span className="btn-arrow"><ArrowCornerIcon /></span>
+              </a>
+            </div>
+          </Reveal>
+        </section>
+
+        {/* Testimonials */}
+        <section className="testimonials" id="testimonios">
+          <div className="testimonials-header">
+            <Reveal delay={0.1}>
+              <h2 className="section-heading">
+                Empezaron con 60 días sin costo.<br />Se quedaron por los resultados.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <p className="section-desc">
+                Activaron su prueba sin costo, probaron los módulos y decidieron quedarse.
+              </p>
+            </Reveal>
+          </div>
+          <div className="t-grid">
+            {testimonials.map((t, i) => (
+              <Reveal key={i} delay={0.08 * i}>
+                <div className="t-card">
+                  <div className="t-stars">{"★".repeat(t.stars)}</div>
+                  {t.result && <div className="t-result">{t.result}</div>}
+                  <p className="t-quote">"{t.quote}"</p>
+                  <div className="t-author">
+                    {t.img
+                      ? <img src={t.img} alt={t.name} className="t-avatar-img" />
+                      : <div className="t-avatar">{t.initials}</div>
+                    }
+                    <div>
+                      <div className="t-name">{t.name}</div>
+                      <div className="t-role">{t.role}</div>
+                      {t.company && <div className="t-company">{t.company}</div>}
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </section>
 
         {/* Objections */}
@@ -3601,7 +3677,7 @@ export default function GuestLanding() {
           <div className="obj-grid">
             {[
               { q: "¿Mis datos están seguros?", a: "Sí. Usamos encriptación de extremo a extremo. Tus datos nunca se usan para entrenar modelos externos. Tu información es tuya y solo tuya." },
-              { q: "¿En qué se diferencia de usar ChatGPT o alguna otra IA?", a: "ChatGPT es una IA genérica. Profit120 es un cerebro especializado en negocios: +200 herramientas preconstruidas por expertos, organizadas por área, para que no empieces de cero cada vez. No necesitas saber hacer prompts — solo abrir la herramienta correcta." },
+              { q: "¿En qué se diferencia de usar ChatGPT o alguna otra IA?", a: "ChatGPT es una IA genérica. Profit120 es un cerebro especializado en negocios: +200 herramientas preconstruidas por expertos, organizadas por área, para que no empieces de cero cada vez." },
               { q: "¿Qué pasa después de los 60 días?", a: "Tú decides si continuar. Sin renovación automática. Sin sorpresas. Sin compromisos. Pero tu cerebro de IA ya va a conocer tu empresa... y eso no lo vas a querer soltar." },
               { q: "¿Necesito tarjeta de crédito?", a: "No. Cero datos de pago. Solo tu correo. Entras, activas tus 60 días sin costo y listo." },
             ].map((obj, i) => (
@@ -3613,6 +3689,19 @@ export default function GuestLanding() {
               </Reveal>
             ))}
           </div>
+          <Reveal delay={0.15}>
+            <div style={{ textAlign: "center", marginTop: 36 }}>
+              <a
+                href="https://www.plataforma.profit120.com/app/chatbot"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-hero"
+              >
+                Empieza sin costo — sin tarjeta de crédito
+                <span className="btn-arrow"><ArrowCornerIcon /></span>
+              </a>
+            </div>
+          </Reveal>
         </section>
 
         {/* B2B upsell */}
@@ -3650,7 +3739,7 @@ export default function GuestLanding() {
               5 módulos de IA. Todo tu equipo. Sin tarjeta de crédito. 60 días para comprobarlo.
             </p>
             <div className="cta-benefits">
-              {["60 días sin costo", "Sin tarjeta de crédito", "Usuarios ilimitados", "5 módulos completos", "Cancela cuando quieras"].map((b, i) => (
+              {["60 días sin costo", "Sin tarjeta de crédito", "Todo tu equipo incluido", "5 módulos completos", "Cancela cuando quieras"].map((b, i) => (
                 <div className="benefit-chip" key={i}>
                   <span className="benefit-dot" />
                   {b}
