@@ -84,7 +84,7 @@ const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 
   body {
     background: ${BRAND.bg};
@@ -103,6 +103,8 @@ const styles = `
   .page {
     min-height: 100vh;
     position: relative;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
   /* ── Marquee ticker ── */
@@ -255,6 +257,9 @@ const styles = `
     align-items: center;
     gap: 16px;
   }
+
+  .nav-cta-mobile { display: none; }
+  .nav-cta-desktop { display: inline; }
 
   /* ── Hero ── */
   .hero {
@@ -2000,10 +2005,50 @@ const styles = `
     background: rgba(34,197,94,0.06);
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .b2b-upsell { padding: 56px 20px; gap: 16px; }
+    .b2b-headline { font-size: clamp(24px, 6vw, 36px); }
+    .b2b-desc { font-size: 15px; padding: 0 8px; }
     .b2b-tags { flex-direction: column; align-items: center; }
-    .b2b-tag { white-space: normal; text-align: center; }
+    .b2b-tag { white-space: normal; text-align: center; font-size: 13px; }
+    .b2b-btn { font-size: 13px; padding: 10px 24px; }
+  }
+
+  /* ── Video section ── */
+  .video-section {
+    padding: 80px 48px;
+    border-top: 1px solid ${BRAND.border};
+    border-bottom: 1px solid ${BRAND.border};
+  }
+
+  .video-section-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .video-section-embed {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.1), 0 0 0 1px ${BRAND.border};
+  }
+
+  @media (max-width: 768px) {
+    .video-section { padding: 60px 20px; }
+    .video-section-grid { grid-template-columns: 1fr; gap: 32px; }
+    .video-section-embed { border-radius: 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .video-section { padding: 48px 16px; }
+    .video-section-grid { gap: 24px; }
+    .video-section-embed { border-radius: 14px; }
   }
 
   /* ── CTA section (light) ── */
@@ -2174,19 +2219,54 @@ const styles = `
     line-height: 1.65;
   }
 
-  /* ── Responsive ── */
+  /* ── Responsive: All sections clamped ── */
+  section, .features, .promo-offer, .howto, .testimonials, .objections,
+  .for-whom, .value-stack, .comparison-section, .problem-section,
+  .b2b-upsell, .final-cta, .footer-full, .video-section, .diff-section {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .product-mockup, .mock-brain, .mock-chat, .mock-boost, .mock-talks, .mock-labs {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  /* ── Responsive: Tablet ── */
+  @media (max-width: 1024px) {
+    .nav { padding: 16px 28px; }
+    .nav-cta { font-size: 13px; padding: 10px 16px; }
+    .promo-offer-shell { grid-template-columns: 1fr; }
+    .promo-points { grid-template-columns: 1fr; }
+    .comparison-row { grid-template-columns: 1.2fr 1fr 0.6fr; padding: 14px 20px; }
+    .product-row { gap: 32px; }
+  }
+
+  /* ── Responsive: Mobile ── */
   @media (max-width: 768px) {
+    /* Global mobile overflow fix */
     .marquee-strip { height: 34px; }
     .marquee-item { padding: 0 18px; font-size: 11px; }
+
+    /* Nav */
     .nav { padding: 14px 20px; }
     .nav-links { display: none; }
-    .nav-cta span { display: none; }
+    /* Nav mobile */
+    .nav-logo img { height: 22px; }
+    .nav-login { font-size: 10px; padding: 6px 10px; white-space: normal; text-align: center; line-height: 1.3; max-width: 80px; color: ${BRAND.textMuted}; }
+    .nav-cta { font-size: 11px; font-weight: 700; padding: 8px 14px; gap: 4px; color: #fff; background: ${BRAND.green}; border-color: rgba(17,55,17,0.08); box-shadow: 0 4px 12px rgba(39,201,39,0.2); }
+    .nav-cta:hover { background: ${BRAND.greenDim}; }
+    .nav-cta span:last-child { display: none; }
+    .nav-cta-desktop { display: none; }
+    .nav-cta-mobile { display: inline; }
+    .nav-actions { gap: 10px; }
+
+    /* Hero */
     .hero { grid-template-columns: 1fr; row-gap: 8px; column-gap: 0; padding: 142px 20px 60px; }
-    .hero-headline { letter-spacing: -1.3px; font-size: clamp(34px, 8vw, 52px); }
+    .hero-headline { letter-spacing: -1.3px; font-size: clamp(34px, 8vw, 52px); margin-bottom: 0; }
     .hero-copy { margin-bottom: -14px; }
     .hero-media { min-height: 0; justify-content: center; }
     .hero-globe { width: min(156vw, 860px); opacity: 0.1; inset: 67% auto auto 50%; }
-    .hero-headline { margin-bottom: 0; }
     .hero-sub { padding: 12px 16px; border-radius: 999px; margin: 0 0 20px; transform: translateY(-20px); }
     .hero-cta-row { gap: 10px; margin-top: 18px; flex-wrap: wrap; }
     .hero-vsl { max-width: 260px; justify-self: center; }
@@ -2194,43 +2274,118 @@ const styles = `
     .hero-offer-title { gap: 6px; letter-spacing: -0.8px; white-space: normal; }
     .hero-offer-title strong { font-size: clamp(22px, 7vw, 30px); }
     .hero-offer-title span { font-size: clamp(22px, 7vw, 30px); }
-    .btn-primary { min-height: 64px; min-width: 0; width: 100%; padding: 0 22px; border-radius: 20px; font-size: clamp(20px, 6vw, 28px); flex-basis: 100%; }
+    .btn-primary { min-height: 64px; min-width: 0; width: 100%; padding: 0 22px; border-radius: 20px; font-size: clamp(16px, 5vw, 22px); flex-basis: 100%; }
     .btn-arrow { width: 28px; height: 28px; font-size: 15px; }
     .hero-line.top, .hero-line.middle, .hero-line.bottom { white-space: normal; }
+
+    /* Stats */
     .stats-strip-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
     .stat-item:nth-child(2)::after { display: none; }
+
+    /* Products */
     .features { padding: 60px 20px 20px; }
-    .product-row { grid-template-columns: 1fr; gap: 32px; padding: 40px 0; }
-    .product-row.reverse .product-info { order: 1; }
-    .product-row.reverse .product-mockup { order: 2; }
+    .product-row { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+    .product-info { order: 1; }
+    .product-mockup { order: 2; }
+    .product-name { font-size: clamp(24px, 6vw, 32px); }
+    .product-desc { font-size: 15px; max-width: 100%; }
+    .product-badge { font-size: 10px; padding: 5px 12px; }
+    .product-feature-item { font-size: 13px; }
     .mock-brain-cards { grid-template-columns: repeat(2, 1fr); }
     .mock-chat-suggestions { grid-template-columns: 1fr; }
-    .mock-boost-grid { grid-template-columns: repeat(3, 1fr); }
+    .mock-boost-grid { grid-template-columns: repeat(2, 1fr); }
+    .mock-boost-categories { flex-wrap: wrap; }
     .mock-labs-grid { grid-template-columns: 1fr; }
+    .mock-talks-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* Promo offer */
     .promo-offer { padding: 24px 20px 80px; }
     .promo-offer-shell { grid-template-columns: 1fr; padding: 22px; }
     .promo-points { grid-template-columns: 1fr; }
-    .signal-panel { min-height: 320px; }
+    .promo-title { font-size: clamp(28px, 7vw, 40px); }
+    .promo-desc { font-size: 15px; }
+    .signal-panel { min-height: 280px; }
+
+    /* How it works */
     .howto { padding: 40px 20px 80px; }
     .steps { grid-template-columns: 1fr; gap: 16px; }
     .steps::before { display: none; }
+
+    /* Shorts */
     .short-inline { padding: 0 20px 36px; }
     .short-inline.float-left, .short-inline.float-right { justify-content: center; }
     .short-inline-asset, .vsl-card { max-width: 220px; }
+
+    /* Testimonials */
     .testimonials { padding: 0 20px 80px; }
+    .t-grid { grid-template-columns: 1fr; }
+
+    /* Objections */
     .objections { padding: 0 20px 80px; }
     .obj-grid { grid-template-columns: 1fr; }
-    .t-grid { grid-template-columns: 1fr; }
+
+    /* Value stack / Pricing */
+    .value-stack { padding: 0 20px 80px; }
+    .value-item { padding: 14px 16px; flex-wrap: wrap; }
+    .value-item-name { font-size: 13px; gap: 6px; }
+    .value-item-badge { font-size: 8px; padding: 2px 6px; }
+    .value-item-price { font-size: 12px; }
+    .value-total { flex-direction: column; align-items: center; gap: 12px; text-align: center; padding: 20px 16px; }
+    .value-total-now { font-size: 26px; }
+    .value-total-was { font-size: 14px; }
+
+    /* Comparison */
+    .comparison-section { padding: 60px 20px; }
+    .comparison-row { grid-template-columns: 1fr; gap: 6px; padding: 14px 16px; }
+    .comparison-row.comp-header { display: none; }
+    .comp-tool { font-size: 14px; font-weight: 700; }
+    .comp-price { font-size: 13px; }
+    .comp-learns { text-align: left; font-size: 12px; }
+
+    /* CTA */
     .final-cta { margin: 0 20px 60px; padding: 48px 24px; }
+    .final-cta-title { font-size: clamp(26px, 7vw, 40px); letter-spacing: -1.2px; }
+    .final-cta-sub { font-size: 15px; }
+    .cta-benefits { gap: 8px; }
+    .benefit-chip { font-size: 12px; padding: 8px 14px; }
+
+    /* Footer */
     .footer { flex-direction: column; gap: 16px; padding: 24px 20px; text-align: center; }
+
+    /* Section headings */
+    .section-heading { font-size: clamp(26px, 7vw, 38px); letter-spacing: -1px; }
+    .section-desc { font-size: 15px; padding: 0 4px; }
   }
 
   @media (max-width: 480px) {
     .hero-cta-row { flex-direction: column; width: 100%; }
-    .btn-primary { width: 100%; justify-content: center; }
+    .btn-primary { width: 100%; justify-content: center; font-size: 16px; min-height: 58px; }
+    .btn-hero { min-width: 0; width: 100%; font-size: 16px; min-height: 58px; padding: 0 24px; }
     .hero-trust { flex-direction: column; gap: 8px; }
+    .hero-anchor-proof { flex-direction: column; text-align: center; gap: 6px; }
     .stats-strip-inner { grid-template-columns: 1fr; gap: 20px; }
     .stat-item::after { display: none !important; }
+    .mock-brain-cards { grid-template-columns: 1fr; }
+    .mock-boost-grid { grid-template-columns: 1fr; }
+    .mock-boost-categories { gap: 6px; }
+    .mock-talks-grid { grid-template-columns: 1fr; }
+    .product-row { gap: 20px; padding: 28px 0; }
+    .promo-offer-shell { padding: 16px; }
+    .promo-point { padding: 12px; }
+    .promo-point strong { font-size: 14px; }
+    .promo-point span { font-size: 12px; }
+    .signal-panel { min-height: 240px; padding: 16px; }
+    .value-item-name { font-size: 12px; }
+    .comparison-row { padding: 12px 14px; }
+    .b2b-upsell { padding: 48px 16px; }
+    .b2b-headline { font-size: clamp(22px, 6vw, 32px); }
+    .for-whom-card { padding: 20px; }
+    .for-whom-title { font-size: 15px; }
+    .for-whom-desc { font-size: 13px; }
+    .obj-card { padding: 20px; }
+    .obj-question { font-size: 15px; }
+    .obj-answer { font-size: 13px; }
+    .pain-card { padding: 20px; flex-direction: column; }
   }
 
   /* ── Problem / Pain section ── */
@@ -2343,6 +2498,8 @@ const styles = `
     .footer-top { grid-template-columns: 1fr; gap: 28px; }
     .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
     .footer-legal { justify-content: center; }
+    .not-for-whom { padding: 20px; }
+    .not-for-list { flex-direction: column; gap: 8px; }
   }
 
   /* ════════════════════════════════
@@ -2597,12 +2754,23 @@ const styles = `
   .hero-video-modal-close:hover { background: rgba(255,255,255,0.22); }
 
   @media (max-width: 768px) {
-    .hero { padding: 175px 20px 88px; }
-    .hero-headline { font-size: clamp(38px, 9vw, 54px) !important; letter-spacing: -2px !important; }
-    .hero-subtext { font-size: 15px; margin-bottom: 36px !important; }
-    .btn-hero { min-width: 0; width: 100%; font-size: 17px; min-height: 62px; }
-    .hero-trust { gap: 12px; }
+    .hero { padding: 155px 20px 72px; }
+    .hero-headline { font-size: clamp(32px, 8.5vw, 50px) !important; letter-spacing: -1.8px !important; }
+    .hero-subtext { font-size: 15px; margin-bottom: 32px !important; padding: 0 8px; }
+    .btn-hero { min-width: 0; width: 100%; font-size: 16px; min-height: 58px; padding: 0 24px; }
+    .hero-trust { gap: 10px; }
+    .hero-cta-block { gap: 12px; margin-bottom: 28px; }
+    .hero-sponsors { gap: 6px 14px; margin-top: 28px; }
+    .hero-sponsor-name { font-size: 11px; padding: 3px 10px; }
+    .hero-sponsors-label { font-size: 10px; }
     .shorts-grid { grid-template-columns: 1fr !important; max-width: 320px !important; }
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 140px 16px 60px; }
+    .hero-headline { font-size: clamp(28px, 8vw, 42px) !important; letter-spacing: -1.5px !important; line-height: 1.02 !important; }
+    .hero-subtext { font-size: 14px; margin-bottom: 28px !important; }
+    .hero-video-trigger { font-size: 13px; }
   }
 
   /* ════════════════════════════════
@@ -2730,8 +2898,10 @@ const styles = `
   .comp-learns { font-size: 14px; color: rgba(25,23,18,0.18); text-align: center; }
   .comparison-row.comp-highlight .comp-learns { color: ${BRAND.green}; font-weight: 700; font-size: 17px; }
   @media (max-width: 640px) {
-    .comparison-section { padding: 60px 20px; }
-    .comparison-row { grid-template-columns: 1.2fr 1fr 0.5fr; padding: 14px 16px; }
+    .comparison-section { padding: 60px 16px; }
+    .comparison-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 14px; }
+    .comparison-row.comp-header { display: none; }
+    .comp-learns { text-align: left; font-size: 12px; }
   }
 
   /* ════════════════════════════════
@@ -2865,10 +3035,15 @@ const styles = `
   }
 
   @media (max-width: 768px) {
-    .diff-section { padding: 72px 20px; }
+    .diff-section { padding: 60px 20px; }
     .diff-timeline { flex-direction: column; gap: 16px; }
     .diff-arrow { transform: rotate(90deg); margin: 0 auto; padding: 4px 0; }
     .diff-step { width: 100%; }
+    .diff-card { padding: 20px 16px; }
+    .diff-step-title { font-size: 15px; }
+    .diff-step-desc { font-size: 12px; }
+    .diff-conclusion { padding: 24px 16px; }
+    .diff-conclusion p { font-size: 15px; }
   }
 
   /* ════════════════════════════════
@@ -3027,13 +3202,13 @@ export default function GuestLanding() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Activa tu cerebro de IA <span>→</span>
+              <span className="nav-cta-desktop">Activa tu cerebro de IA</span><span className="nav-cta-mobile">Acceso gratis</span> <span>→</span>
             </a>
           </div>
         </nav>
 
         {/* Hero — centered single-column */}
-        <div style={{ position: "relative", width: "100%" }}>
+        <div style={{ position: "relative", width: "100%", overflow: "hidden" }}>
         <InfiniteGridBackground />
         <section className="hero">
           {/* 2. Headline */}
@@ -3094,30 +3269,10 @@ export default function GuestLanding() {
         )}
 
         {/* Video section */}
-        <section style={{ padding: "80px 48px", borderTop: `1px solid ${BRAND.border}`, borderBottom: `1px solid ${BRAND.border}` }}>
-          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}>
-            {/* Video embed */}
+        <section className="video-section">
+          <div className="video-section-grid">
+            {/* Context — info first */}
             <Reveal delay={0} direction="right">
-              <div style={{
-                position: "relative",
-                borderRadius: 20,
-                overflow: "hidden",
-                aspectRatio: "16 / 9",
-                background: "#000",
-                boxShadow: `0 24px 64px rgba(0,0,0,0.1), 0 0 0 1px ${BRAND.border}`,
-              }}>
-                <iframe
-                  src="https://www.youtube.com/embed/U-vm1CTmgR8?rel=0&modestbranding=1&playsinline=1"
-                  title="Profit120 — Ve cómo funciona"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "none" }}
-                />
-              </div>
-            </Reveal>
-
-            {/* Context */}
-            <Reveal delay={0.1} direction="left">
               <div>
                 <div className="section-eyebrow" style={{ justifyContent: "flex-start", marginBottom: 20 }}>
                   <span className="eyebrow-line" />Ve en acción
@@ -3141,6 +3296,19 @@ export default function GuestLanding() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </Reveal>
+
+            {/* Video embed — second */}
+            <Reveal delay={0.1} direction="left">
+              <div className="video-section-embed">
+                <iframe
+                  src="https://www.youtube.com/embed/U-vm1CTmgR8?rel=0&modestbranding=1&playsinline=1"
+                  title="Profit120 — Ve cómo funciona"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "none" }}
+                />
               </div>
             </Reveal>
           </div>
@@ -3284,6 +3452,17 @@ export default function GuestLanding() {
           {/* ── CHAT ── */}
           <Reveal delay={0.05}>
             <div className="product-row">
+              <div className="product-info">
+                <div className="product-badge">24/7</div>
+                <h3 className="product-name">Profit CHAT</h3>
+                <p className="product-desc">Tu consultor IA disponible a cualquier hora. Adjunta archivos, pide análisis, resuelve dudas, con contexto de tu empresa.</p>
+                <div className="product-features-list">
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Chat especializado en PYMES</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Adjunta archivos para análisis instantáneo</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> La IA ya conoce el contexto de tu empresa</div>
+                </div>
+                <a href="https://www.plataforma.profit120.com/app/chatbot" className="module-mini-link" target="_blank" rel="noopener noreferrer">Accede sin costo →</a>
+              </div>
               <div className="product-mockup">
                 <div className="mockup-bar">
                   <span className="mockup-dot red" /><span className="mockup-dot yellow" /><span className="mockup-dot green" />
@@ -3302,17 +3481,6 @@ export default function GuestLanding() {
                     <div className="mock-chat-suggestion"><strong>Explícame más de Profit120</strong>¡No escondemos nada!</div>
                   </div>
                 </div>
-              </div>
-              <div className="product-info">
-                <div className="product-badge">24/7</div>
-                <h3 className="product-name">Profit CHAT</h3>
-                <p className="product-desc">Tu consultor IA disponible a cualquier hora. Adjunta archivos, pide análisis, resuelve dudas, con contexto de tu empresa.</p>
-                <div className="product-features-list">
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Chat especializado en PYMES</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Adjunta archivos para análisis instantáneo</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> La IA ya conoce el contexto de tu empresa</div>
-                </div>
-                <a href="https://www.plataforma.profit120.com/app/chatbot" className="module-mini-link" target="_blank" rel="noopener noreferrer">Accede sin costo →</a>
               </div>
             </div>
           </Reveal>
@@ -3372,6 +3540,17 @@ export default function GuestLanding() {
           {/* ── TALKS ── */}
           <Reveal delay={0.05}>
             <div className="product-row">
+              <div className="product-info">
+                <div className="product-badge">SEMANAL</div>
+                <h3 className="product-name">Profit TALKS</h3>
+                <p className="product-desc">El newsletter que forma criterio. Análisis, tendencias y casos reales que se aplican de inmediato. +56 ediciones.</p>
+                <div className="product-features-list">
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> +55 episodios publicados</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Casos reales de empresas LATAM</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Marcos de decisión aplicables</div>
+                </div>
+                <a href="https://www.plataforma.profit120.com/app/library" className="module-mini-link" target="_blank" rel="noopener noreferrer">Accede sin costo →</a>
+              </div>
               <div className="product-mockup">
                 <div className="mockup-bar">
                   <span className="mockup-dot red" /><span className="mockup-dot yellow" /><span className="mockup-dot green" />
@@ -3401,17 +3580,6 @@ export default function GuestLanding() {
                     ))}
                   </div>
                 </div>
-              </div>
-              <div className="product-info">
-                <div className="product-badge">SEMANAL</div>
-                <h3 className="product-name">Profit TALKS</h3>
-                <p className="product-desc">El newsletter que forma criterio. Análisis, tendencias y casos reales que se aplican de inmediato. +56 ediciones.</p>
-                <div className="product-features-list">
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> +55 episodios publicados</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Casos reales de empresas LATAM</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Marcos de decisión aplicables</div>
-                </div>
-                <a href="https://www.plataforma.profit120.com/app/library" className="module-mini-link" target="_blank" rel="noopener noreferrer">Accede sin costo →</a>
               </div>
             </div>
           </Reveal>
@@ -3790,8 +3958,8 @@ export default function GuestLanding() {
             <div>
               <div className="footer-col-title">Legal & Contacto</div>
               <div className="footer-col-links">
-                <a href="https://profit120.com/privacidad" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>
-                <a href="https://profit120.com/terminos" target="_blank" rel="noopener noreferrer">Términos de Uso</a>
+                <a href="https://plataforma.profit120.com/privacidad" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>
+                <a href="https://plataforma.profit120.com/terminos" target="_blank" rel="noopener noreferrer">Términos de Uso</a>
                 <a href="mailto:hola@profit120.com">info@profit120.com</a>
                 <a href="https://www.plataforma.profit120.com/app/chatbot" target="_blank" rel="noopener noreferrer">Activar 60 días sin costo →</a>
               </div>
@@ -3800,8 +3968,8 @@ export default function GuestLanding() {
           <div className="footer-bottom">
             <span>© {new Date().getFullYear()} Profit120. Todos los derechos reservados.</span>
             <div className="footer-legal">
-              <a href="https://profit120.com/privacidad" target="_blank" rel="noopener noreferrer">Privacidad</a>
-              <a href="https://profit120.com/terminos" target="_blank" rel="noopener noreferrer">Términos</a>
+              <a href="https://plataforma.profit120.com/privacidad" target="_blank" rel="noopener noreferrer">Privacidad</a>
+              <a href="https://plataforma.profit120.com/terminos" target="_blank" rel="noopener noreferrer">Términos</a>
               <a href="mailto:hola@profit120.com">Contacto</a>
             </div>
           </div>
