@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { GlobeInteractive } from "../components/ui/cobe-globe-interactive";
 
 const BRAND = {
   bg: "#ffffff",
@@ -64,7 +63,7 @@ function Reveal({ children, delay = 0, direction = "up", className = "" }) {
 
 /* ── Animated counter ── */
 function AnimatedCounter({ end, suffix = "", duration = 2000 }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(end);
   const [ref, visible] = useReveal(0.3);
   useEffect(() => {
     if (!visible) return;
@@ -297,12 +296,9 @@ const styles = `
   }
 
   .hero-line { display: block; }
-  .hero-line.top { white-space: nowrap; }
   .hero-line.middle {
     color: ${BRAND.green};
-    white-space: nowrap;
   }
-  .hero-line.bottom { white-space: nowrap; }
 
   .hero-sub {
     display: inline-flex;
@@ -690,11 +686,6 @@ const styles = `
     gap: 48px;
     align-items: center;
     padding: 60px 0;
-    border-top: 1px solid ${BRAND.border};
-  }
-
-  .product-row:last-child {
-    border-bottom: 1px solid ${BRAND.border};
   }
 
   .product-row.reverse .product-info { order: 2; }
@@ -1888,39 +1879,113 @@ const styles = `
     color: ${BRAND.textMuted};
   }
 
+  /* ── B2B upsell ── */
+  .b2b-upsell {
+    background: #0f0f1a;
+    padding: 72px 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .b2b-upsell::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(34,197,94,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .b2b-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #22c55e;
+    background: rgba(34,197,94,0.08);
+    border: 1px solid rgba(34,197,94,0.2);
+    padding: 6px 14px;
+    border-radius: 999px;
+    text-transform: uppercase;
+  }
+
+  .b2b-headline {
+    font-size: clamp(22px, 2.8vw, 36px);
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    max-width: 640px;
+    margin: 0;
+  }
+
+  .b2b-desc {
+    font-size: 15px;
+    color: #a1a1aa;
+    line-height: 1.65;
+    max-width: 520px;
+    margin: 0;
+  }
+
+  .b2b-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .b2b-tag {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 7px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .b2b-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    padding: 12px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+
+  .b2b-btn:hover {
+    border-color: #22c55e;
+    color: #22c55e;
+    background: rgba(34,197,94,0.06);
+  }
+
+  @media (max-width: 600px) {
+    .b2b-upsell { padding: 56px 20px; gap: 16px; }
+    .b2b-tags { flex-direction: column; align-items: center; }
+    .b2b-tag { white-space: normal; text-align: center; }
+  }
+
   /* ── CTA section (light) ── */
   .final-cta {
     position: relative;
     z-index: 5;
-    margin: 0 48px 80px;
-    border-radius: 28px;
     padding: 80px 48px;
     text-align: center;
-    overflow: hidden;
-    background: linear-gradient(180deg, rgba(39,201,39,0.06), rgba(255,255,255,0.98));
-    border: 1px solid rgba(25,23,18,0.08);
-  }
-
-  .final-cta::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(39,201,39,0.4), transparent);
-  }
-
-  .final-cta::after {
-    content: '';
-    position: absolute;
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 300px;
-    background: radial-gradient(ellipse, rgba(39,201,39,0.1), transparent 70%);
-    pointer-events: none;
   }
 
   .final-cta-title {
@@ -2048,7 +2113,10 @@ const styles = `
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+    align-items: stretch;
   }
+
+  .obj-grid > div { display: flex; flex-direction: column; }
 
   .obj-card {
     background: rgba(255,255,255,0.88);
@@ -2056,6 +2124,9 @@ const styles = `
     border-radius: 20px;
     padding: 28px;
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   .obj-card:hover {
@@ -2135,76 +2206,725 @@ const styles = `
     .stats-strip-inner { grid-template-columns: 1fr; gap: 20px; }
     .stat-item::after { display: none !important; }
   }
+
+  /* ── Problem / Pain section ── */
+  .problem-section {
+    position: relative;
+    z-index: 5;
+    background: #f9f9f7;
+    border-top: 1px solid ${BRAND.border};
+    border-bottom: 1px solid ${BRAND.border};
+    padding: 80px 48px;
+  }
+  .problem-inner { max-width: 1100px; margin: 0 auto; }
+  .problem-header { text-align: center; margin-bottom: 56px; }
+  .pain-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .pain-card {
+    background: #fff;
+    border: 1px solid ${BRAND.border};
+    border-radius: 20px;
+    padding: 28px 32px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: all 0.3s ease;
+  }
+  .pain-card:hover { border-color: rgba(239,68,68,0.15); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(239,68,68,0.04); }
+  .pain-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(239,68,68,0.06); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .pain-title { font-weight: 700; font-size: 16px; color: ${BRAND.textPrimary}; margin-bottom: 6px; }
+  .pain-desc { font-size: 14px; color: ${BRAND.textSecondary}; line-height: 1.65; }
+
+  /* ── "¿Para quién es?" ── */
+  .for-whom { position: relative; z-index: 5; max-width: 1100px; margin: 0 auto; padding: 80px 48px 100px; }
+  .for-whom-header { text-align: center; margin-bottom: 56px; }
+  .for-whom-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px; }
+  .for-whom-card {
+    background: rgba(255,255,255,0.88);
+    border: 1px solid ${BRAND.border};
+    border-radius: 20px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: all 0.3s ease;
+  }
+  .for-whom-card:hover { border-color: rgba(39,201,39,0.2); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(39,201,39,0.06); }
+  .for-whom-check { width: 28px; height: 28px; border-radius: 8px; background: rgba(39,201,39,0.1); display: flex; align-items: center; justify-content: center; color: ${BRAND.green}; font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .for-whom-title { font-size: 16px; font-weight: 700; color: ${BRAND.textPrimary}; margin-bottom: 4px; }
+  .for-whom-desc { font-size: 14px; color: ${BRAND.textSecondary}; line-height: 1.6; }
+  .not-for-whom { background: rgba(249,249,247,0.8); border: 1px solid ${BRAND.border}; border-radius: 20px; padding: 24px 32px; text-align: center; }
+  .not-for-whom-title { font-size: 12px; font-weight: 700; color: ${BRAND.textMuted}; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+  .not-for-list { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .not-for-item { font-size: 13px; color: ${BRAND.textMuted}; background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.1); padding: 6px 14px; border-radius: 999px; }
+
+  /* ── Value stack ── */
+  .value-stack { position: relative; z-index: 5; max-width: 780px; margin: 0 auto; padding: 0 48px 100px; text-align: center; }
+  .value-stack-header { margin-bottom: 40px; }
+  .value-items { display: flex; flex-direction: column; border: 1px solid ${BRAND.border}; border-radius: 20px; overflow: hidden; margin-bottom: 16px; }
+  .value-item { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: rgba(255,255,255,0.9); border-bottom: 1px solid ${BRAND.border}; gap: 12px; }
+  .value-item:last-child { border-bottom: none; }
+  .value-item-name { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: ${BRAND.textPrimary}; flex: 1; flex-wrap: wrap; }
+  .value-item-badge { font-size: 9px; font-weight: 700; color: ${BRAND.green}; background: rgba(39,201,39,0.1); border: 1px solid rgba(39,201,39,0.15); padding: 3px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  .value-item-price { font-size: 13px; font-weight: 700; color: ${BRAND.textMuted}; text-decoration: line-through; white-space: nowrap; }
+  .value-total { background: rgba(39,201,39,0.05); border: 1px solid rgba(39,201,39,0.15); border-radius: 16px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+  .value-total-label { font-size: 16px; font-weight: 700; color: ${BRAND.textPrimary}; }
+  .value-total-price { display: flex; align-items: baseline; gap: 10px; }
+  .value-total-was { font-size: 15px; font-weight: 600; color: ${BRAND.textMuted}; text-decoration: line-through; }
+  .value-total-now { font-size: 30px; font-weight: 800; color: ${BRAND.green}; letter-spacing: -1px; }
+  .value-total-period { font-size: 12px; color: ${BRAND.textMuted}; }
+
+  /* ── Compact modules mini grid ── */
+  .modules-grid-section { padding: 0 0 20px; }
+  .modules-mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+  .module-mini-card { background: rgba(255,255,255,0.88); border: 1px solid ${BRAND.border}; border-radius: 20px; padding: 28px; transition: all 0.3s ease; display: flex; flex-direction: column; gap: 12px; }
+  .module-mini-card:hover { border-color: rgba(39,201,39,0.2); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(39,201,39,0.06); }
+  .module-mini-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: rgba(39,201,39,0.08); border: 1px solid rgba(39,201,39,0.15); font-size: 10px; font-weight: 700; color: ${BRAND.green}; letter-spacing: 1.5px; text-transform: uppercase; width: fit-content; }
+  .module-mini-name { font-weight: 800; font-size: 20px; color: ${BRAND.textPrimary}; letter-spacing: -0.5px; }
+  .module-mini-desc { font-size: 14px; color: ${BRAND.textSecondary}; line-height: 1.6; }
+  .module-mini-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: ${BRAND.green}; text-decoration: none; margin-top: auto; }
+  .module-mini-link:hover { opacity: 0.75; }
+
+  /* ── Testimonial improvements ── */
+  .t-avatar-img { width: 42px; height: 42px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+  .t-company { font-size: 11px; color: ${BRAND.textMuted}; margin-top: 1px; }
+  .t-result { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: ${BRAND.green}; background: rgba(39,201,39,0.08); border: 1px solid rgba(39,201,39,0.15); padding: 5px 12px; border-radius: 999px; margin-bottom: 14px; }
+
+  /* ── Full footer ── */
+  .footer-full { position: relative; z-index: 5; border-top: 1px solid ${BRAND.border}; padding: 48px 48px 32px; }
+  .footer-top { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid ${BRAND.border}; margin-bottom: 28px; }
+  .footer-brand p { font-size: 13px; color: ${BRAND.textMuted}; line-height: 1.6; margin-top: 12px; max-width: 240px; }
+  .footer-brand img { height: 28px; width: auto; }
+  .footer-col-title { font-size: 11px; font-weight: 700; color: ${BRAND.textPrimary}; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+  .footer-col-links { display: flex; flex-direction: column; gap: 10px; }
+  .footer-col-links a { font-size: 13px; color: ${BRAND.textMuted}; text-decoration: none; transition: color 0.2s ease; }
+  .footer-col-links a:hover { color: ${BRAND.green}; }
+  .footer-social { display: flex; gap: 8px; margin-top: 16px; }
+  .footer-social a { width: 34px; height: 34px; border-radius: 10px; background: rgba(25,23,18,0.05); border: 1px solid ${BRAND.border}; display: flex; align-items: center; justify-content: center; color: ${BRAND.textMuted}; text-decoration: none; transition: all 0.2s ease; }
+  .footer-social a:hover { background: rgba(39,201,39,0.08); border-color: rgba(39,201,39,0.2); color: ${BRAND.green}; }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: ${BRAND.textMuted}; }
+  .footer-legal { display: flex; gap: 20px; }
+  .footer-legal a { color: ${BRAND.textMuted}; text-decoration: none; transition: color 0.2s ease; }
+  .footer-legal a:hover { color: ${BRAND.green}; }
+
+  @media (max-width: 768px) {
+    .pain-grid { grid-template-columns: 1fr; }
+    .for-whom { padding: 60px 20px 80px; }
+    .for-whom-grid { grid-template-columns: 1fr; }
+    .modules-mini-grid { grid-template-columns: 1fr; }
+    .value-stack { padding: 0 20px 80px; }
+    .problem-section { padding: 60px 20px; }
+    .footer-full { padding: 40px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    .footer-legal { justify-content: center; }
+  }
+
+  /* ════════════════════════════════
+     MODULES 2×2 GRID
+     ════════════════════════════════ */
+  .modules-2x2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .module-card-2x2 {
+    background: #fff;
+    border: 1px solid ${BRAND.border};
+    border-radius: 20px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .module-card-2x2:hover {
+    box-shadow: 0 20px 48px rgba(0,0,0,0.07);
+    transform: translateY(-3px);
+  }
+
+  .module-card-2x2 .product-mockup {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
+
+  .module-card-2x2-info {
+    padding: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .modules-2x2 { grid-template-columns: 1fr; }
+  }
+
+  /* ════════════════════════════════
+     HERO REDESIGN — centered single-column
+     ════════════════════════════════ */
+  .hero {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 210px 16px 130px;
+    max-width: 980px;
+    grid-template-columns: unset !important;
+  }
+
+  .hero-anchor-proof {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: ${BRAND.textMuted};
+    margin-bottom: 36px;
+    letter-spacing: 0;
+  }
+
+  .hero-anchor-proof strong {
+    color: ${BRAND.textPrimary};
+    font-weight: 700;
+  }
+
+  .hero-anchor-avatars {
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-anchor-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: linear-gradient(135deg, rgba(39,201,39,0.25), rgba(82,223,82,0.35));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: ${BRAND.greenDim};
+    margin-left: -8px;
+    flex-shrink: 0;
+  }
+
+  .hero-anchor-avatar:first-child { margin-left: 0; }
+
+  .hero-headline {
+    font-size: clamp(44px, 6vw, 80px) !important;
+    text-align: center !important;
+    letter-spacing: -3px !important;
+    line-height: 0.97 !important;
+    margin-bottom: 32px;
+  }
+
+  .hero-line.middle { white-space: nowrap; }
+
+  .hero-line.top, .hero-line.bottom { color: ${BRAND.textPrimary} !important; }
+  .hero-line.middle { color: ${BRAND.green} !important; }
+
+  .hero-subtext {
+    font-size: clamp(16px, 1.4vw, 18px);
+    color: ${BRAND.textSecondary};
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 auto 48px;
+  }
+
+  .hero-cta-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .btn-hero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: ${BRAND.green};
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(16px, 1.4vw, 19px);
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    padding: 0 36px;
+    min-height: 68px;
+    min-width: 320px;
+    border-radius: 22px;
+    border: 1px solid rgba(17,55,17,0.08);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.26), 0 12px 28px rgba(39,201,39,0.22);
+    animation: heroCtaPulse 2.2s ease-in-out infinite;
+  }
+
+  .btn-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 10%, rgba(255,255,255,0.26) 38%, rgba(255,255,255,0.08) 52%, transparent 72%);
+    transform: translateX(-100%);
+    animation: heroCtaSweep 2.8s ease-in-out infinite;
+  }
+
+  .btn-hero:hover { transform: translateY(-2px); background: ${BRAND.greenDim}; }
+  .btn-hero:active { transform: scale(0.98); }
+  .btn-hero:hover .btn-arrow { transform: translateX(3px); }
+
+  .hero-video-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: ${BRAND.textMuted};
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+  }
+
+  .hero-video-trigger:hover { color: ${BRAND.textPrimary}; }
+
+  .hero-play-circle {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(39,201,39,0.1);
+    border: 1px solid rgba(39,201,39,0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center !important;
+    flex-wrap: wrap;
+    max-width: none !important;
+    justify-self: unset !important;
+  }
+
+  .hero-globe {
+    inset: 70% auto auto 50% !important;
+    width: min(120vw, 1200px) !important;
+    opacity: 0.12 !important;
+  }
+
+  /* ── Video modal ── */
+  .hero-video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(10,10,10,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.25s ease;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .hero-video-modal-inner {
+    position: relative;
+    width: min(340px, 88vw);
+    aspect-ratio: 9 / 16;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+  }
+
+  .hero-video-modal-inner iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  .hero-video-modal-close {
+    position: absolute;
+    top: -44px;
+    right: 0;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .hero-video-modal-close:hover { background: rgba(255,255,255,0.22); }
+
+  @media (max-width: 768px) {
+    .hero { padding: 140px 20px 88px; }
+    .hero-headline { font-size: clamp(38px, 9vw, 54px) !important; letter-spacing: -2px !important; }
+    .hero-subtext { font-size: 15px; margin-bottom: 36px !important; }
+    .btn-hero { min-width: 0; width: 100%; font-size: 17px; min-height: 62px; }
+    .hero-trust { gap: 12px; }
+    .shorts-grid { grid-template-columns: 1fr !important; max-width: 320px !important; }
+  }
+
+  /* ════════════════════════════════
+     ANIMATIONS & SUBTLE EFFECTS
+     ════════════════════════════════ */
+
+  @keyframes float {
+    0%,100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes scan-h {
+    0% { transform: translateX(-200%); opacity: 0; }
+    20% { opacity: 0.8; }
+    80% { opacity: 0.8; }
+    100% { transform: translateX(600%); opacity: 0; }
+  }
+  @keyframes gradient-x {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* ── Hero bg ───────────────────────── */
+
+  /* ── Hero bg (particles) ──────────── */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-glow-orb-1 {
+    width: 700px; height: 700px;
+    top: -250px; left: -120px;
+    background: radial-gradient(circle, rgba(39,201,39,0.04) 0%, transparent 65%);
+  }
+  .hero-glow-orb-2 {
+    width: 400px; height: 400px;
+    bottom: -80px; right: -80px;
+    background: radial-gradient(circle, rgba(39,201,39,0.03) 0%, transparent 65%);
+  }
+  .hero-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background: rgba(39,201,39,0.4);
+    box-shadow: 0 0 6px rgba(39,201,39,0.5);
+  }
+  .hero-particle:nth-child(1) { width:3px;height:3px;top:18%;left:7%; animation:float 5s ease-in-out infinite; }
+  .hero-particle:nth-child(2) { width:4px;height:4px;top:55%;left:88%; animation:float 7s ease-in-out infinite 1s; }
+  .hero-particle:nth-child(3) { width:2px;height:2px;top:32%;right:14%; animation:float 6.5s ease-in-out infinite 2s; }
+  .hero-particle:nth-child(4) { width:5px;height:5px;top:75%;left:38%; animation:float 4s ease-in-out infinite 0.5s; }
+  .hero-particle:nth-child(5) { width:3px;height:3px;top:12%;right:26%; animation:float 8s ease-in-out infinite 3s; }
+  .hero-particle:nth-child(6) { width:4px;height:4px;top:68%;right:22%; animation:float 5.5s ease-in-out infinite 1.5s; }
+  .hero-particle:nth-child(7) { width:2px;height:2px;top:42%;left:18%; animation:float 6s ease-in-out infinite 0.8s; }
+  .hero-particle:nth-child(8) { width:3px;height:3px;top:85%;right:38%; animation:float 7.5s ease-in-out infinite 2.5s; }
+
+  /* hero headline gradient */
+  .hero-headline .hero-line.middle {
+    background: linear-gradient(100deg, #1a9c1a 0%, #27c927 50%, #1a9c1a 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-x 4s linear infinite;
+  }
+
+  /* ── Scan line on mockup bars ──────── */
+  .mockup-bar { position: relative; overflow: hidden; }
+  .mockup-bar::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 50px;
+    background: linear-gradient(90deg, transparent, rgba(39,201,39,0.18), transparent);
+    animation: scan-h 4s ease-in-out infinite;
+  }
+
+  /* ── Comparison table ──────────────── */
+  .comparison-section {
+    padding: 80px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .comparison-table {
+    margin-top: 40px;
+    border: 1px solid ${BRAND.border};
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .comparison-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    align-items: center;
+    padding: 16px 28px;
+    border-bottom: 1px solid ${BRAND.border};
+    gap: 16px;
+    transition: background 0.2s ease;
+  }
+  .comparison-row:last-child { border-bottom: none; }
+  .comparison-row.comp-header {
+    background: rgba(25,23,18,0.02);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: ${BRAND.textMuted};
+    padding: 12px 28px;
+  }
+  .comparison-row.comp-highlight {
+    background: rgba(39,201,39,0.04);
+    border-top: 1px solid rgba(39,201,39,0.12);
+    border-bottom: 1px solid rgba(39,201,39,0.12);
+  }
+  .comp-tool { font-size: 14px; font-weight: 600; color: ${BRAND.textPrimary}; }
+  .comparison-row.comp-highlight .comp-tool { color: ${BRAND.green}; font-weight: 700; }
+  .comp-price { font-size: 13px; color: ${BRAND.textSecondary}; }
+  .comparison-row.comp-highlight .comp-price { font-size: 14px; font-weight: 700; color: ${BRAND.green}; }
+  .comp-learns { font-size: 14px; color: rgba(25,23,18,0.18); text-align: center; }
+  .comparison-row.comp-highlight .comp-learns { color: ${BRAND.green}; font-weight: 700; font-size: 17px; }
+  @media (max-width: 640px) {
+    .comparison-section { padding: 60px 20px; }
+    .comparison-row { grid-template-columns: 1.2fr 1fr 0.5fr; padding: 14px 16px; }
+  }
+
+  /* ════════════════════════════════
+     HERO SPONSORS
+     ════════════════════════════════ */
+  .hero-sponsors {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px 20px;
+    margin-top: 40px;
+  }
+
+  .hero-sponsors-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: ${BRAND.textMuted};
+    width: 100%;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .hero-sponsor-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: ${BRAND.textMuted};
+    opacity: 0.55;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border: 1px solid ${BRAND.border};
+    border-radius: 6px;
+    transition: opacity 0.2s ease;
+  }
+
+  .hero-sponsor-name:hover { opacity: 0.85; }
+
+  /* ════════════════════════════════
+     DIFFERENTIATOR TIMELINE
+     ════════════════════════════════ */
+  .diff-section {
+    padding: 100px 48px;
+    background: ${BRAND.dark};
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .diff-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .diff-timeline {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-top: 64px;
+    position: relative;
+  }
+
+  .diff-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+
+  .diff-step-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: ${BRAND.green};
+    margin-bottom: 12px;
+  }
+
+  .diff-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px 20px;
+    width: 100%;
+  }
+
+  .diff-step-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .diff-step-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  .diff-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    margin-top: 72px;
+    color: ${BRAND.green};
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .diff-conclusion {
+    margin-top: 48px;
+    text-align: center;
+    padding: 32px;
+    background: rgba(39,201,39,0.06);
+    border: 1px solid rgba(39,201,39,0.2);
+    border-radius: 16px;
+  }
+
+  .diff-conclusion p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .diff-conclusion strong {
+    color: ${BRAND.green};
+  }
+
+  @media (max-width: 768px) {
+    .diff-section { padding: 72px 20px; }
+    .diff-timeline { flex-direction: column; gap: 16px; }
+    .diff-arrow { transform: rotate(90deg); margin: 0 auto; padding: 4px 0; }
+    .diff-step { width: 100%; }
+  }
+
+  /* ════════════════════════════════
+     BRAIN IN-ACTION BLOCK
+     ════════════════════════════════ */
+  .brain-in-action {
+    margin-top: 28px;
+    padding: 20px 24px;
+    background: rgba(39,201,39,0.06);
+    border: 1px solid rgba(39,201,39,0.18);
+    border-radius: 14px;
+  }
+
+  .brain-in-action-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: ${BRAND.green};
+    margin-bottom: 8px;
+  }
+
+  .brain-in-action-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.65;
+  }
+
+  /* ════════════════════════════════
+     PRODUCT ROW BRAIN (wider variant)
+     ════════════════════════════════ */
+  .product-row-brain .product-row-content {
+    max-width: 600px;
+  }
+
+  .product-row-brain .product-row-visual {
+    min-height: 420px;
+  }
 `;
 
 const testimonials = [
   {
     stars: 5,
-    quote: "Nunca pensé que una herramienta de IA realmente entendiera mi negocio. Profit120 me ayudó a reestructurar mis precios en 20 minutos.",
-    name: "Carlos M.",
-    role: "Dueño de restaurante",
+    quote: "En 3 semanas, Profit120 ya entendía mi negocio mejor que mi contador. El análisis de flujo de caja me ahorró $47,000 pesos en decisiones que iba a tomar mal.",
+    name: "Carlos Mendoza",
+    role: "Dueño",
+    company: "Restaurante La Trattoria, CDMX",
+    result: "$47,000 pesos ahorrados",
     initials: "CM",
+    img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face",
   },
   {
     stars: 5,
-    quote: "Lo probé como invitado por curiosidad y terminé comprando el plan completo. La sección de finanzas sola vale oro.",
-    name: "Ana L.",
-    role: "Fundadora de e-commerce",
+    quote: "Lo probé como invitada por curiosidad. A los 5 días ya tenía a mi equipo de 8 personas usando BRAIN todos los días. La sección de finanzas sola vale la suscripción.",
+    name: "Ana López",
+    role: "Fundadora",
+    company: "NovaTienda (e-commerce), Monterrey",
+    result: "8 personas activas en 5 días",
     initials: "AL",
+    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face",
   },
   {
     stars: 5,
-    quote: "Mi contador me cobra por lo que Profit120 me da en segundos. El análisis de flujo de caja me ahorró miles de pesos.",
-    name: "Roberto S.",
-    role: "Director de agencia",
+    quote: "Mi agencia llevaba 2 años sin estructura financiera real. Con Profit BRAIN armé mi centro de costos y estrategia de precios en una tarde. Literal.",
+    name: "Roberto Solís",
+    role: "Director",
+    company: "Agencia Creativa Pixel, Guadalajara",
+    result: "Estructura financiera en 1 tarde",
     initials: "RS",
-  },
-  {
-    stars: 5,
-    quote: "Activé los 60 días sin costo pensando que no iba a usar todo. A la semana ya tenía a mi equipo completo dentro de la plataforma.",
-    name: "Laura G.",
-    role: "COO de startup",
-    initials: "LG",
-  },
-  {
-    stars: 5,
-    quote: "Profit CHAT me resolvió en 5 minutos lo que mi consultor no pudo en 3 semanas. Literal le mandé screenshot.",
-    name: "Diego R.",
-    role: "Dueño de franquicia",
-    initials: "DR",
-  },
-  {
-    stars: 5,
-    quote: "Los Profit LABS cambiaron la forma en que mi equipo piensa. Salimos con una estrategia real, no con teoría de libro.",
-    name: "Patricia V.",
-    role: "Directora de operaciones",
-    initials: "PV",
+    img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face",
   },
 ];
 
 const marqueeItems = [
+  "Tu empresa entrena su propio cerebro de IA",
   "60 días sin costo",
-  "Acceso ilimitado para ti y toda tu empresa",
-  "5 módulos estratégicos desbloqueados",
-  "Sin tarjeta de crédito requerida",
-  "Cero riesgo. Cero compromiso.",
-  "IA aplicada a tu negocio",
+  "Sin tarjeta de crédito",
   "Todo tu equipo incluido",
-  "Promoción por tiempo limitado — actívala hoy",
+  "+200 herramientas empresariales",
+  "Promoción por tiempo limitado",
 ];
 
-const shorts = [
-  {
-    title: "Short 1: Que es Profit120",
-    thumbUrl: "https://i.ytimg.com/vi/HswRHEFk6oA/hqdefault.jpg",
-    watchUrl: "https://www.youtube.com/shorts/HswRHEFk6oA",
-  },
-  {
-    title: "Short 2: Promoción 60 días sin costo",
-    thumbUrl: "https://i.ytimg.com/vi/cb7jEJX1i9A/hqdefault.jpg",
-    watchUrl: "https://www.youtube.com/shorts/cb7jEJX1i9A",
-  },
-];
 
 const CheckIcon = () => (
   <svg className="trust-check" viewBox="0 0 16 16" fill="none">
@@ -2222,6 +2942,7 @@ const ArrowCornerIcon = () => (
 
 export default function GuestLanding() {
   const [scrolled, setScrolled] = useState(false);
+  const [activeVideoId, setActiveVideoId] = useState(null);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -2251,84 +2972,137 @@ export default function GuestLanding() {
             <img src="/assets/Negro-Verde.png" alt="Profit120" />
           </div>
           <div className="nav-links">
-            <a href="#productos" className="nav-link">Productos</a>
             <a href="#como-funciona" className="nav-link">Cómo funciona</a>
+            <a href="#productos" className="nav-link">Módulos</a>
             <a href="#testimonios" className="nav-link">Testimonios</a>
           </div>
           <a
-            href="https://plataforma.profit120.com/app/chatbot"
+            href="https://www.plataforma.profit120.com/app/chatbot"
             className="nav-cta"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Ingresa ahora <span>→</span>
+            Activa tu cerebro de IA <span>→</span>
           </a>
         </nav>
 
-        {/* Hero (original layout restored) */}
+        {/* Hero — centered single-column */}
         <section className="hero">
-          <div className="hero-globe">
-            <GlobeInteractive speed={0.0026} />
-          </div>
+          {/* 2. Headline */}
+          <Reveal delay={0.05}>
+            <h1 className="hero-headline">
+              <span className="hero-line top">Tu empresa merece</span>
+              <span className="hero-line middle">su propio cerebro de IA.</span>
+            </h1>
+          </Reveal>
 
-          <Reveal delay={0}>
-            <div className="hero-copy">
-              <p className="hero-sub">
-                Oferta limitada: acceso completo para ti y todo tu equipo. 60 días. $0. Sin tarjeta.
-              </p>
-              <h1 className="hero-headline">
-                <span className="hero-line top">La plataforma de</span>
-                <span className="hero-line middle">Inteligencia Empresarial</span>
-                <span className="hero-line bottom">más avanzada de LATAM</span>
-              </h1>
-              <Reveal delay={0.1}>
-                <div className="hero-cta-row">
-                  <div className="hero-offer-card">
-                    <span className="glass-flare" aria-hidden="true" />
-                    <div className="hero-offer-title">
-                      <strong>60 días</strong>
-                      <span>sin costo</span>
-                    </div>
-                  </div>
-                  <a
-                    href="https://plataforma.profit120.com/app/chatbot"
-                    className="btn-primary"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Entra Ahora
-                    <span className="btn-arrow"><ArrowCornerIcon /></span>
-                  </a>
-                </div>
-              </Reveal>
+          {/* 3. Sub-headline */}
+          <Reveal delay={0.1}>
+            <p className="hero-subtext">
+              Cada uso la hace más inteligente sobre tu negocio. Finanzas, ventas, marketing, operaciones y RRHH — todo en un solo lugar, para ti y todo tu equipo.
+            </p>
+          </Reveal>
 
-              <Reveal delay={0.18}>
-                <div className="hero-trust">
-                  <div className="trust-item"><CheckIcon /> 60 días sin costo</div>
-                  <div className="trust-item"><CheckIcon /> Sin tarjeta de crédito</div>
-                  <div className="trust-item"><CheckIcon /> Todo tu equipo incluido</div>
-                  <div className="trust-item"><CheckIcon /> Cancela cuando quieras</div>
-                </div>
-              </Reveal>
+          {/* 4. CTA */}
+          <Reveal delay={0.15}>
+            <div className="hero-cta-block">
+              <a
+                href="https://www.plataforma.profit120.com/app/chatbot"
+                className="btn-hero"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Entrena el cerebro de tu empresa — 60 días gratis
+                <span className="btn-arrow"><ArrowCornerIcon /></span>
+              </a>
+              <button className="hero-video-trigger" onClick={() => setActiveVideoId("HswRHEFk6oA")}>
+                <span className="hero-play-circle">
+                  <svg viewBox="0 0 12 12" fill={BRAND.green} width="10" height="10">
+                    <path d="M3 2l7 4-7 4V2z"/>
+                  </svg>
+                </span>
+                Ver cómo funciona (2 min)
+              </button>
             </div>
           </Reveal>
 
-          <Reveal delay={0.18}>
-            <div className="hero-media">
-              <div className="hero-vsl">
-                <div className="hero-vsl-embed">
-                  <iframe
-                    src="https://www.youtube.com/embed/HswRHEFk6oA?rel=0&modestbranding=1&playsinline=1"
-                    title={shorts[0].title}
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  />
+          {/* 5. Trust bullets */}
+          <Reveal delay={0.2}>
+            <div className="hero-trust">
+              <div className="trust-item"><CheckIcon /> 60 días sin costo — sin tarjeta de crédito</div>
+              <div className="trust-item"><CheckIcon /> Todo tu equipo incluido — sin límite de usuarios</div>
+            </div>
+          </Reveal>
+        </section>
+
+        {/* Video modal */}
+        {activeVideoId && (
+          <div className="hero-video-modal" onClick={() => setActiveVideoId(null)}>
+            <div className="hero-video-modal-inner" onClick={e => e.stopPropagation()}>
+              <button className="hero-video-modal-close" onClick={() => setActiveVideoId(null)}>✕</button>
+              <iframe
+                src={`https://www.youtube.com/embed/${activeVideoId}?rel=0&modestbranding=1&playsinline=1&autoplay=1`}
+                title="Profit120 video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Video section */}
+        <section style={{ padding: "80px 48px", borderTop: `1px solid ${BRAND.border}`, borderBottom: `1px solid ${BRAND.border}` }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}>
+            {/* Video embed */}
+            <Reveal delay={0} direction="right">
+              <div style={{
+                position: "relative",
+                borderRadius: 20,
+                overflow: "hidden",
+                aspectRatio: "16 / 9",
+                background: "#000",
+                boxShadow: `0 24px 64px rgba(0,0,0,0.1), 0 0 0 1px ${BRAND.border}`,
+              }}>
+                <iframe
+                  src="https://www.youtube.com/embed/HswRHEFk6oA?rel=0&modestbranding=1&playsinline=1"
+                  title="Profit120 — Ve cómo funciona"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "none" }}
+                />
+              </div>
+            </Reveal>
+
+            {/* Context */}
+            <Reveal delay={0.1} direction="left">
+              <div>
+                <div className="section-eyebrow" style={{ justifyContent: "flex-start", marginBottom: 20 }}>
+                  <span className="eyebrow-line" />Ve en acción
+                </div>
+                <h2 className="section-heading" style={{ textAlign: "left", marginBottom: 16 }}>
+                  2 minutos que<br />lo explican todo.
+                </h2>
+                <p style={{ fontSize: 16, color: BRAND.textSecondary, lineHeight: 1.7, marginBottom: 28 }}>
+                  Ve qué es Profit120, cómo funciona su IA y por qué no es una herramienta más — es el cerebro que tu empresa necesitaba.
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                  {[
+                    "Qué son los 5 módulos y para qué sirven",
+                    "Cómo la IA aprende de tu empresa con cada uso",
+                    "Por qué 60 días es todo lo que necesitas para comprobarlo",
+                  ].map((point, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                      <span style={{ width: 22, height: 22, borderRadius: "50%", background: BRAND.greenGlow, border: `1px solid ${BRAND.borderHover}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
+                        <svg viewBox="0 0 12 12" fill={BRAND.green} width="8" height="8"><path d="M2 6l3 3 5-5" stroke={BRAND.green} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      </span>
+                      <span style={{ fontSize: 15, color: BRAND.textSecondary, lineHeight: 1.5 }}>{point}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </section>
 
         {/* Stats strip */}
@@ -2353,40 +3127,42 @@ export default function GuestLanding() {
           </div>
         </section>
 
-        {/* How it works */}
-        <section className="howto" id="como-funciona">
-          <div className="howto-header">
-            <Reveal delay={0.1}>
-              <h2 className="section-heading">
-                Empieza en 2 minutos.<br />Sin tarjeta. Sin compromiso.
-              </h2>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <p className="section-desc">
-                Activa tu prueba de 60 días sin costo y desbloquea los 5 módulos para todo tu equipo.
-              </p>
-            </Reveal>
-          </div>
-          <div className="steps">
-            <Reveal delay={0}>
-              <div className="step-card">
-                <div className="step-num">1</div>
-                <h3 className="step-title">Crea tu cuenta sin costo</h3>
-                <p className="step-desc">Regístrate con tu correo. No necesitas tarjeta de crédito ni aprobación de nadie.</p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <div className="step-card">
-                <div className="step-num">2</div>
-                <h3 className="step-title">Invita a tu equipo</h3>
-                <p className="step-desc">Agrega a todos los que necesites. Sin límite de usuarios durante tus 60 días sin costo.</p>
-              </div>
-            </Reveal>
+        {/* Problem / Pain section */}
+        <section className="problem-section">
+          <div className="problem-inner">
+            <div className="problem-header">
+              <Reveal delay={0.05}>
+                <div className="section-eyebrow"><span className="eyebrow-line" />El problema<span className="eyebrow-line" /></div>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <h2 className="section-heading">
+                  ¿Tu empresa opera a ciegas?
+                </h2>
+              </Reveal>
+            </div>
+            <div className="pain-grid">
+              {[
+                { icon: "🎯", title: "Decides con instinto, no con datos.", desc: "Sin información confiable, cada decisión es una apuesta." },
+                { icon: "🐢", title: "Tu contador llega tarde y cobra caro.", desc: "Para cuando recibes el reporte, el momento ya pasó." },
+                { icon: "🧩", title: "Cada área opera en silos.", desc: "Ventas, finanzas y marketing no se hablan. La empresa no funciona como sistema." },
+                { icon: "🔁", title: "ChatGPT empieza desde cero cada vez.", desc: "Eso no es inteligencia — es pérdida de tiempo disfrazada de productividad." },
+              ].map((p, i) => (
+                <Reveal key={i} delay={0.08 * i}>
+                  <div className="pain-card">
+                    <div className="pain-icon">{p.icon}</div>
+                    <div>
+                      <div className="pain-title">{p.title}</div>
+                      <div className="pain-desc">{p.desc}</div>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
             <Reveal delay={0.2}>
-              <div className="step-card">
-                <div className="step-num">3</div>
-                <h3 className="step-title">Resuelve problemas reales</h3>
-                <p className="step-desc">Usa los 5 módulos para tomar mejores decisiones desde el primer día. 60 días completos para probarlo todo.</p>
+              <div style={{ textAlign: "center", marginTop: 48 }}>
+                <a href="https://www.plataforma.profit120.com/app/chatbot" className="btn-secondary" target="_blank" rel="noopener noreferrer">
+                  Conoce una mejor forma →
+                </a>
               </div>
             </Reveal>
           </div>
@@ -2402,36 +3178,29 @@ export default function GuestLanding() {
             </Reveal>
             <Reveal delay={0.15}>
               <p className="section-desc">
-                Cada módulo resuelve un problema real de tu negocio. Con tus 60 días sin costo, desbloqueas los 5 desde el primer minuto.
+                Con tus 60 días sin costo, desbloqueas los 5 desde el primer minuto. Y cada uno alimenta tu cerebro de IA — mientras más usas, más te conoce.
               </p>
             </Reveal>
           </div>
 
-          {/* ── Profit BRAIN ── */}
-          <Reveal>
+          {/* ── BRAIN ── */}
+          <Reveal delay={0}>
             <div className="product-row">
               <div className="product-info">
                 <div className="product-badge">IA</div>
                 <h3 className="product-name">Profit BRAIN</h3>
-                <p className="product-desc">
-                  Tu centro de mando inteligente. Más de 200 herramientas de IA que analizan, proyectan y aceleran las decisiones de tu empresa.
-                </p>
+                <p className="product-desc">Tu centro de mando inteligente. Más de 200 herramientas de IA que analizan, proyectan y aceleran las decisiones de tu empresa.</p>
                 <div className="product-features-list">
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> +200 herramientas por categoría</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Favoritos y recomendaciones personalizadas</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Finanzas, Marketing, Ventas, RRHH y más</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> +200 herramientas organizadas por área</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Buscador inteligente que te recomienda la herramienta correcta</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Finanzas, Marketing, Ventas, RRHH, Operaciones, Liderazgo y más</div>
                 </div>
-                <div className="product-cta-row">
-                  <a href="https://plataforma.profit120.com/app/tools" className="btn-primary product-cta" target="_blank" rel="noopener noreferrer">
-                    Accede sin costo
-                    <span className="btn-arrow"><ArrowCornerIcon /></span>
-                  </a>
-                </div>
+                <a href="https://www.plataforma.profit120.com/app/tools" className="module-mini-link" target="_blank" rel="noopener noreferrer">Explorar herramientas →</a>
               </div>
               <div className="product-mockup">
                 <div className="mockup-bar">
                   <span className="mockup-dot red" /><span className="mockup-dot yellow" /><span className="mockup-dot green" />
-                  <span className="mockup-url">app.profit120.com</span>
+                  <span className="mockup-url">plataforma.profit120.com/app/tools</span>
                 </div>
                 <div className="mock-brain">
                   <div className="mock-brain-header">
@@ -2442,30 +3211,28 @@ export default function GuestLanding() {
                     <span className="mock-brain-tab active">Inicio 202</span>
                     <span className="mock-brain-tab">Finanzas 3</span>
                     <span className="mock-brain-tab">Marketing 42</span>
-                    <span className="mock-brain-tab">Operaciones 64</span>
                     <span className="mock-brain-tab">Ventas 29</span>
-                    <span className="mock-brain-tab">RRHH 37</span>
                   </div>
                   <div className="mock-brain-search">Escribe tu pregunta o necesidad...</div>
                   <div className="mock-brain-cards">
-                    <div className="mock-brain-card" style={{ background: "linear-gradient(135deg, #22c55e, #16a34a)" }}>
-                      <div className="mock-brain-card-title">Flujo de Caja Inteligente</div>
-                      <div className="mock-brain-card-sub">Registro semanal de flujo de efectivo</div>
-                      <div className="mock-brain-card-cat">FINANZAS</div>
-                    </div>
-                    <div className="mock-brain-card" style={{ background: "linear-gradient(135deg, #3b82f6, #2563eb)" }}>
-                      <div className="mock-brain-card-title">Centro de Costos</div>
-                      <div className="mock-brain-card-sub">Agrupa gastos por área</div>
-                      <div className="mock-brain-card-cat">FINANZAS</div>
-                    </div>
-                    <div className="mock-brain-card" style={{ background: "linear-gradient(135deg, #a855f7, #7c3aed)" }}>
-                      <div className="mock-brain-card-title">Generador de Anuncios con IA</div>
-                      <div className="mock-brain-card-sub">Copy e imágenes para redes</div>
+                    <div className="mock-brain-card" style={{ background: "linear-gradient(135deg, #1e3a5f, #2d5986)" }}>
+                      <div className="mock-brain-card-title">Calificación de Leads</div>
+                      <div className="mock-brain-card-sub">Organiza leads: MQL, SQL, PQL y CQL</div>
                       <div className="mock-brain-card-cat">MARKETING</div>
                     </div>
-                    <div className="mock-brain-card" style={{ background: "linear-gradient(135deg, #f43f5e, #e11d48)" }}>
-                      <div className="mock-brain-card-title">Análisis de Compensación</div>
-                      <div className="mock-brain-card-sub">Benchmarks internos y de mercado</div>
+                    <div className="mock-brain-card" style={{ background: "linear-gradient(135deg, #065f46, #047857)" }}>
+                      <div className="mock-brain-card-title">Estrategia de Ventas</div>
+                      <div className="mock-brain-card-sub">Plantilla de estrategia de ventas</div>
+                      <div className="mock-brain-card-cat">VENTAS</div>
+                    </div>
+                    <div className="mock-brain-card" style={{ background: "linear-gradient(135deg, #581c87, #7c3aed)" }}>
+                      <div className="mock-brain-card-title">Proceso de Reclutamiento</div>
+                      <div className="mock-brain-card-sub">Define los 7 pasos del proceso</div>
+                      <div className="mock-brain-card-cat">RRHH</div>
+                    </div>
+                    <div className="mock-brain-card" style={{ background: "linear-gradient(135deg, #78350f, #a16207)" }}>
+                      <div className="mock-brain-card-title">Dashboard de KPIs de RRHH</div>
+                      <div className="mock-brain-card-sub">Rotación, tiempo de contratación...</div>
                       <div className="mock-brain-card-cat">RRHH</div>
                     </div>
                   </div>
@@ -2474,31 +3241,13 @@ export default function GuestLanding() {
             </div>
           </Reveal>
 
-          {/* ── Profit CHAT ── */}
-          <Reveal>
-            <div className="product-row reverse">
-              <div className="product-info">
-                <div className="product-badge">24/7</div>
-                <h3 className="product-name">Profit CHAT</h3>
-                <p className="product-desc">
-                  Tu consultor 24/7 con IA. Pregunta lo que necesites sobre tu negocio y recibe respuestas estratégicas al instante.
-                </p>
-                <div className="product-features-list">
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Chat especializado en PYMES</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Adjunta archivos para análisis</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Respuestas con contexto empresarial</div>
-                </div>
-                <div className="product-cta-row">
-                  <a href="https://plataforma.profit120.com/app/chatbot" className="btn-primary product-cta" target="_blank" rel="noopener noreferrer">
-                    Accede sin costo
-                    <span className="btn-arrow"><ArrowCornerIcon /></span>
-                  </a>
-                </div>
-              </div>
+          {/* ── CHAT ── */}
+          <Reveal delay={0.05}>
+            <div className="product-row">
               <div className="product-mockup">
                 <div className="mockup-bar">
                   <span className="mockup-dot red" /><span className="mockup-dot yellow" /><span className="mockup-dot green" />
-                  <span className="mockup-url">app.profit120.com/chat</span>
+                  <span className="mockup-url">plataforma.profit120.com/app/chatbot</span>
                 </div>
                 <div className="mock-chat">
                   <div className="mock-chat-greeting">¡Hola! 👋</div>
@@ -2508,79 +3257,70 @@ export default function GuestLanding() {
                     <div className="mock-chat-send">↑</div>
                   </div>
                   <div className="mock-chat-suggestions">
-                    <div className="mock-chat-suggestion">
-                      <strong>Actualmente tengo este problema en mi empresa...</strong>
-                      ¡Sin miedo! Estoy aquí para ayudarte a resolver los problemas que enfrenta tu empresa.
-                    </div>
-                    <div className="mock-chat-suggestion">
-                      <strong>Necesito saber más acerca de...</strong>
-                      Nadie nace sabiéndolo todo... ¿Qué información estás buscando?
-                    </div>
-                    <div className="mock-chat-suggestion">
-                      <strong>Explícame más de Profit120</strong>
-                      ¡No escondemos nada! Pregúntanos lo que quieras para ayudarte mejor.
-                    </div>
+                    <div className="mock-chat-suggestion"><strong>Actualmente tengo este problema en mi empresa...</strong>¡Sin miedo! Estoy aquí para ayudarte.</div>
+                    <div className="mock-chat-suggestion"><strong>Necesito saber más acerca de...</strong>Nadie nace sabiéndolo todo...</div>
+                    <div className="mock-chat-suggestion"><strong>Explícame más de Profit120</strong>¡No escondemos nada!</div>
                   </div>
                 </div>
+              </div>
+              <div className="product-info">
+                <div className="product-badge">24/7</div>
+                <h3 className="product-name">Profit CHAT</h3>
+                <p className="product-desc">Tu consultor IA disponible a cualquier hora. Adjunta archivos, pide análisis, resuelve dudas — con contexto de tu empresa.</p>
+                <div className="product-features-list">
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Chat especializado en PYMES</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Adjunta archivos para análisis instantáneo</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> La IA ya conoce el contexto de tu empresa</div>
+                </div>
+                <a href="https://www.plataforma.profit120.com/app/chatbot" className="module-mini-link" target="_blank" rel="noopener noreferrer">Accede sin costo →</a>
               </div>
             </div>
           </Reveal>
 
-          {/* ── Profit BOOST ── */}
-          <Reveal>
+          {/* ── BOOST ── */}
+          <Reveal delay={0.05}>
             <div className="product-row">
               <div className="product-info">
                 <div className="product-badge">20 MIN</div>
                 <h3 className="product-name">Profit BOOST</h3>
-                <p className="product-desc">
-                  Soluciones en 20 minutos. Un problema real con una solución accionable. Frameworks, plantillas y herramientas para ejecutar hoy.
-                </p>
+                <p className="product-desc">Un problema real. Una solución accionable. Frameworks y plantillas para ejecutar hoy, organizados por categoría.</p>
                 <div className="product-features-list">
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> +7 categorías de problemas reales</div>
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Top 10 en tendencias diarias</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Explorar por categoría</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Frameworks listos para aplicar</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Frameworks listos para aplicar de inmediato</div>
                 </div>
-                <div className="product-cta-row">
-                  <a href="https://plataforma.profit120.com/app/courses" className="btn-primary product-cta" target="_blank" rel="noopener noreferrer">
-                    Accede sin costo
-                    <span className="btn-arrow"><ArrowCornerIcon /></span>
-                  </a>
-                </div>
+                <a href="https://www.plataforma.profit120.com/app/courses" className="module-mini-link" target="_blank" rel="noopener noreferrer">Accede sin costo →</a>
               </div>
               <div className="product-mockup">
                 <div className="mockup-bar">
                   <span className="mockup-dot red" /><span className="mockup-dot yellow" /><span className="mockup-dot green" />
-                  <span className="mockup-url">app.profit120.com/boost</span>
+                  <span className="mockup-url">plataforma.profit120.com/app/courses</span>
                 </div>
                 <div className="mock-boost">
-                  <div className="mock-boost-section-title">Top 10 en Tendencias Hoy</div>
-                  <div className="mock-boost-grid">
-                    {[
-                      { title: "La Necesidad de Contratar", bg: "linear-gradient(135deg, #e8f5e9, #c8e6c9)", color: "#2e7d32" },
-                      { title: "Balance General", bg: "linear-gradient(135deg, #e3f2fd, #bbdefb)", color: "#1565c0" },
-                      { title: "Margen de Contribución", bg: "linear-gradient(135deg, #1a237e, #283593)", color: "#fff" },
-                      { title: "La Deuda Financiera", bg: "linear-gradient(135deg, #3e2723, #5d4037)", color: "#fff" },
-                      { title: "Capital de Trabajo", bg: "linear-gradient(135deg, #e8f5e9, #a5d6a7)", color: "#1b5e20" },
-                    ].map((card, i) => (
-                      <div className="mock-boost-card" key={i} style={{ background: card.bg }}>
-                        <span className="mock-boost-card-plus">+</span>
-                        <div className="mock-boost-card-title" style={{ color: card.color }}>{card.title}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mock-boost-section-title">Explorar por Categoría</div>
+                  <div className="mock-boost-section-title">Categorías populares</div>
                   <div className="mock-boost-categories">
                     {[
-                      { name: "Finanzas", bg: "linear-gradient(135deg, #1e3a5f, #2d5986)" },
-                      { name: "Operaciones", bg: "linear-gradient(135deg, #374151, #4b5563)" },
-                      { name: "RRHH", bg: "linear-gradient(135deg, #7c2d12, #9a3412)" },
-                      { name: "Startups", bg: "linear-gradient(135deg, #065f46, #047857)" },
-                      { name: "Marketing", bg: "linear-gradient(135deg, #581c87, #7c3aed)" },
-                      { name: "Ventas", bg: "linear-gradient(135deg, #0c4a6e, #0369a1)" },
-                      { name: "Liderazgo", bg: "linear-gradient(135deg, #78350f, #a16207)" },
-                    ].map((cat) => (
-                      <div key={cat.name} className="mock-boost-cat" style={{ background: cat.bg }}>
-                        <span>{cat.name}</span>
+                      { label: "Marketing", bg: "linear-gradient(135deg,#1e3a5f,#2d5986)" },
+                      { label: "Finanzas", bg: "linear-gradient(135deg,#065f46,#047857)" },
+                      { label: "Ventas", bg: "linear-gradient(135deg,#581c87,#7c3aed)" },
+                      { label: "Operaciones", bg: "linear-gradient(135deg,#78350f,#a16207)" },
+                      { label: "RRHH", bg: "linear-gradient(135deg,#1e1b4b,#3730a3)" },
+                    ].map((c, i) => (
+                      <div key={i} className="mock-boost-cat" style={{ background: c.bg }}><span>{c.label}</span></div>
+                    ))}
+                  </div>
+                  <div className="mock-boost-section-title">Top de esta semana</div>
+                  <div className="mock-boost-grid">
+                    {[
+                      { title: "Estrategia de Precios", bg: "linear-gradient(160deg,#1e3a5f,#0f172a)" },
+                      { title: "Plan de Marketing", bg: "linear-gradient(160deg,#065f46,#022c22)" },
+                      { title: "Control de Costos", bg: "linear-gradient(160deg,#581c87,#2e1065)" },
+                      { title: "Pipeline de Ventas", bg: "linear-gradient(160deg,#78350f,#2c1300)" },
+                      { title: "Onboarding", bg: "linear-gradient(160deg,#1e1b4b,#0d0a2e)" },
+                    ].map((card, i) => (
+                      <div key={i} className="mock-boost-card" style={{ background: card.bg }}>
+                        <div className="mock-boost-card-plus">+</div>
+                        <div className="mock-boost-card-title">{card.title}</div>
                       </div>
                     ))}
                   </div>
@@ -2589,112 +3329,88 @@ export default function GuestLanding() {
             </div>
           </Reveal>
 
-          {/* ── Profit TALKS ── */}
-          <Reveal>
-            <div className="product-row reverse">
-              <div className="product-info">
-                <div className="product-badge">NEWS</div>
-                <h3 className="product-name">Profit TALKS</h3>
-                <p className="product-desc">
-                  El newsletter que forma criterio. Cada semana recibes análisis, tendencias, casos reales y marcos de decisión que se aplican de inmediato.
-                </p>
-                <div className="product-features-list">
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Contenido semanal curado</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Casos reales de empresas LATAM</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Marcos de decisión aplicables</div>
-                </div>
-                <div className="product-cta-row">
-                  <a href="https://plataforma.profit120.com/app/library" className="btn-primary product-cta" target="_blank" rel="noopener noreferrer">
-                    Accede sin costo
-                    <span className="btn-arrow"><ArrowCornerIcon /></span>
-                  </a>
-                </div>
-              </div>
+          {/* ── TALKS ── */}
+          <Reveal delay={0.05}>
+            <div className="product-row">
               <div className="product-mockup">
                 <div className="mockup-bar">
                   <span className="mockup-dot red" /><span className="mockup-dot yellow" /><span className="mockup-dot green" />
-                  <span className="mockup-url">app.profit120.com/talks</span>
+                  <span className="mockup-url">plataforma.profit120.com/app/library</span>
                 </div>
                 <div className="mock-talks">
                   <div className="mock-talks-header">
-                    <div className="mock-talks-logo">Profit <span>TALKS</span></div>
-                    <div className="mock-talks-sort">Ordenar: Más recientes</div>
+                    <div className="mock-talks-logo">Profit<span>TALKS</span></div>
+                    <div className="mock-talks-sort">Recientes ▾</div>
                   </div>
                   <div className="mock-talks-grid">
                     {[
-                      { num: "#55", title: "Narcos Inc. 3", bg: "linear-gradient(135deg, #1a1a2e, #3d3d5c)", dur: "10:32", date: "17 Mar 2026", sub: "Narcos Inc. 3" },
-                      { num: "#54", title: "Narcos Inc. 2", bg: "linear-gradient(135deg, #2d2d3f, #4a4a6a)", dur: "11:52", date: "08 Mar 2026", sub: "Narcos Inc. 2" },
-                      { num: "#53", title: "Narcos Inc.", bg: "linear-gradient(135deg, #1e293b, #475569)", dur: "13:26", date: "03 Mar 2026", sub: "Narcos Inc. 1" },
-                      { num: "#52", title: "Los Sesgos Conductuales", bg: "linear-gradient(135deg, #0f172a, #1e3a5f)", dur: "12:43", date: "03 Mar 2026", sub: "Riesgo Empresarial 4" },
-                      { num: "#51", title: "Skin In The Game", bg: "linear-gradient(135deg, #78350f, #92400e)", dur: "12:00", date: "02 Mar 2026", sub: "Riesgo Empresarial 3" },
-                      { num: "#50", title: "Cisnes Negros vs Blancos", bg: "linear-gradient(135deg, #374151, #6b7280)", dur: "13:15", date: "20 Feb 2026", sub: "Riesgo Empresarial 2" },
+                      { num: "#56", title: "Decisiones con datos", dur: "8 min", bg: "linear-gradient(135deg,#1e3a5f,#0f172a)" },
+                      { num: "#55", title: "IA en tu operación", dur: "6 min", bg: "linear-gradient(135deg,#065f46,#022c22)" },
+                      { num: "#54", title: "Finanzas sin contador", dur: "7 min", bg: "linear-gradient(135deg,#581c87,#2e1065)" },
                     ].map((ep, i) => (
-                      <div className="mock-talks-card" key={i}>
+                      <div key={i} className="mock-talks-card">
                         <div className="mock-talks-thumb" style={{ background: ep.bg }}>
-                          <span className="mock-talks-thumb-num">{ep.num}</span>
-                          <span className="mock-talks-thumb-title">{ep.title}</span>
-                          <span className="mock-talks-thumb-dur">{ep.dur}</span>
-                        </div>
-                        <div className="mock-talks-card-meta">
-                          <div className="mock-talks-card-title">{ep.sub}</div>
-                          <div className="mock-talks-card-date">{ep.date}</div>
+                          <div className="mock-talks-thumb-num">{ep.num}</div>
+                          <div className="mock-talks-thumb-title">{ep.title}</div>
+                          <div className="mock-talks-thumb-dur">{ep.dur}</div>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
+              <div className="product-info">
+                <div className="product-badge">SEMANAL</div>
+                <h3 className="product-name">Profit TALKS</h3>
+                <p className="product-desc">El newsletter que forma criterio. Análisis, tendencias y casos reales que se aplican de inmediato. +56 ediciones.</p>
+                <div className="product-features-list">
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> +55 episodios publicados</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Casos reales de empresas LATAM</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Marcos de decisión aplicables</div>
+                </div>
+                <a href="https://www.plataforma.profit120.com/app/library" className="module-mini-link" target="_blank" rel="noopener noreferrer">Accede sin costo →</a>
+              </div>
             </div>
           </Reveal>
 
-          {/* ── Profit LABS ── */}
-          <Reveal>
+          {/* ── LABS ── */}
+          <Reveal delay={0.05}>
             <div className="product-row">
               <div className="product-info">
                 <div className="product-badge">LIVE</div>
                 <h3 className="product-name">Profit LABS</h3>
-                <p className="product-desc">
-                  Estrategia colaborativa en vivo. Tú y tu equipo, trabajando codo a codo para rediseñar decisiones con datos reales, IA y estructura accionable.
-                </p>
+                <p className="product-desc">Estrategia colaborativa en vivo. Cupo limitado por sesión — cuando se llena, se llena.</p>
                 <div className="product-features-list">
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Sesiones en vivo con expertos</div>
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Cupo limitado por sesión</div>
-                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Estrategias aplicables inmediatas</div>
+                  <div className="product-feature-item"><span className="product-feature-check">✓</span> Marketing, Finanzas, Operaciones y más</div>
                 </div>
-                <div className="product-cta-row">
-                  <a href="https://plataforma.profit120.com/app/labs" className="btn-primary product-cta" target="_blank" rel="noopener noreferrer">
-                    Accede sin costo
-                    <span className="btn-arrow"><ArrowCornerIcon /></span>
-                  </a>
-                </div>
+
+                <a href="https://www.plataforma.profit120.com/app/labs" className="module-mini-link" target="_blank" rel="noopener noreferrer">Ver sesiones disponibles →</a>
               </div>
               <div className="product-mockup">
                 <div className="mockup-bar">
                   <span className="mockup-dot red" /><span className="mockup-dot yellow" /><span className="mockup-dot green" />
-                  <span className="mockup-url">app.profit120.com/labs</span>
+                  <span className="mockup-url">plataforma.profit120.com/app/labs</span>
                 </div>
                 <div className="mock-labs">
                   <div className="mock-labs-header">
-                    <div className="mock-labs-title">Profit LABS</div>
-                    <div className="mock-labs-sub">Programa colaborativo donde el empresario y su equipo construyen estrategias de puesta en práctica inmediata.</div>
+                    <div className="mock-labs-title">Sesiones en Vivo</div>
+                    <div className="mock-labs-sub">Estrategia colaborativa con expertos</div>
                   </div>
                   <div className="mock-labs-grid">
                     {[
-                      { title: "Marketing Inteligente", bg: "#1e293b", badge: "CUPO LLENO", badgeBg: "#ef4444", desc: "Ventas con IA", meta: "4 sesiones · 10/10" },
-                      { title: "La Rentabilidad Empresarial", bg: "#92400e", badge: "CUPO LLENO", badgeBg: "#ef4444", desc: "Ingresos y costos", meta: "4 sesiones · 15/15" },
-                      { title: "Roles y Responsabilidades", bg: "#1e3a5f", badge: "DISPONIBLE", badgeBg: BRAND.green, badgeColor: "#000", desc: "Define roles con tu equipo", meta: "5 sesiones · 4/15" },
-                      { title: "Flujo de Caja", bg: "#065f46", badge: "DISPONIBLE", badgeBg: BRAND.green, badgeColor: "#000", desc: "Controla tu efectivo", meta: "4 sesiones · 6/15" },
-                      { title: "Estrategia de Ventas", bg: "#581c87", badge: "PRÓXIMO", badgeBg: "#f59e0b", badgeColor: "#000", desc: "Pipeline y conversión", meta: "5 sesiones · 2/15" },
-                      { title: "Liderazgo Efectivo", bg: "#0c4a6e", badge: "PRÓXIMO", badgeBg: "#f59e0b", badgeColor: "#000", desc: "Gestión de equipos", meta: "4 sesiones · 0/15" },
-                    ].map((lab, i) => (
-                      <div className="mock-labs-card" key={i}>
-                        <div className="mock-labs-card-img" style={{ background: `linear-gradient(135deg, ${lab.bg}, ${lab.bg}dd)` }}>
-                          <span className="mock-labs-badge" style={{ background: lab.badgeBg, color: lab.badgeColor || "#fff" }}>{lab.badge}</span>
-                          <span style={{ color: "#fff", fontWeight: 700, fontSize: 9, zIndex: 2, textAlign: "center", lineHeight: 1.3 }}>{lab.title}</span>
+                      { title: "Marketing Inteligente con IA", meta: "10/10 participantes", badge: "LLENO", badgeColor: "#ef4444", bg: "linear-gradient(135deg,#7f1d1d,#b91c1c)" },
+                      { title: "Rentabilidad y Control", meta: "15/15 participantes", badge: "LLENO", badgeColor: "#ef4444", bg: "linear-gradient(135deg,#1e3a5f,#1d4ed8)" },
+                      { title: "Roles y Responsabilidades", meta: "4/15 participantes", badge: "DISPONIBLE", badgeColor: "#16a34a", bg: "linear-gradient(135deg,#065f46,#15803d)" },
+                    ].map((session, i) => (
+                      <div key={i} className="mock-labs-card">
+                        <div className="mock-labs-card-img" style={{ background: session.bg }}>
+                          <div className="mock-labs-badge" style={{ background: session.badgeColor, color: "#fff" }}>{session.badge}</div>
                         </div>
                         <div className="mock-labs-card-body">
-                          <div className="mock-labs-card-title">{lab.desc}</div>
-                          <div className="mock-labs-card-meta">{lab.meta}</div>
+                          <div className="mock-labs-card-title">{session.title}</div>
+                          <div className="mock-labs-card-meta">{session.meta}</div>
                         </div>
                       </div>
                     ))}
@@ -2705,77 +3421,46 @@ export default function GuestLanding() {
           </Reveal>
         </section>
 
-        {/* Mid-page CTA */}
-        <section className="promo-offer">
-          <div className="promo-offer-shell">
-            <div className="promo-copy">
-              <Reveal>
-                <div className="promo-kicker">
-                  <span className="promo-kicker-dot" />
-                  Oferta activa
-                </div>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <h2 className="promo-title">
-                  <span>Todo esto es tuyo.</span><br />
-                  <span className="green-text">60 días. $0.</span>
-                </h2>
-              </Reveal>
-              <Reveal delay={0.15}>
-                <p className="promo-desc">
-                  No es una demo limitada. Es la plataforma completa — los 5 módulos,
-                  para ti y todo tu equipo, durante 60 días sin costo.
-                </p>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <div className="promo-points">
-                  <div className="promo-point">
-                    <div className="promo-point-icon"><CheckIcon /></div>
-                    <div><strong>Acceso completo</strong><span>Los 5 módulos desbloqueados desde el día 1</span></div>
-                  </div>
-                  <div className="promo-point">
-                    <div className="promo-point-icon"><CheckIcon /></div>
-                    <div><strong>Todo tu equipo</strong><span>Sin límite de usuarios durante la prueba</span></div>
-                  </div>
-                  <div className="promo-point">
-                    <div className="promo-point-icon"><CheckIcon /></div>
-                    <div><strong>Sin tarjeta</strong><span>No pedimos datos de pago para empezar</span></div>
-                  </div>
-                  <div className="promo-point">
-                    <div className="promo-point-icon"><CheckIcon /></div>
-                    <div><strong>60 días completos</strong><span>No 7. No 14. Sesenta días para probarlo todo.</span></div>
-                  </div>
-                </div>
-              </Reveal>
-              <Reveal delay={0.25}>
-                <a href="https://plataforma.profit120.com/app/chatbot" className="btn-primary" style={{ minHeight: 56, minWidth: 200, fontSize: 16, flex: "none" }} target="_blank" rel="noopener noreferrer">
-                  Empieza tus 60 días sin costo
-                  <span className="btn-arrow"><ArrowCornerIcon /></span>
-                </a>
-              </Reveal>
-            </div>
-            <Reveal delay={0.12} direction="left" className="promo-visual">
-              <div className="signal-panel">
-                <div className="signal-top">
-                  <span className="signal-label">Impacto en empresas</span>
-                  <span className="signal-live"><span className="promo-kicker-dot" /> En vivo</span>
-                </div>
-                <div className="signal-bars" aria-hidden="true">
-                  <div className="signal-bar" style={{ height: "55%" }} />
-                  <div className="signal-bar" style={{ height: "78%" }} />
-                  <div className="signal-bar" style={{ height: "62%" }} />
-                  <div className="signal-bar" style={{ height: "88%" }} />
-                  <div className="signal-bar" style={{ height: "100%" }} />
-                </div>
-                <div className="signal-cards">
-                  <div className="signal-card"><strong>+200</strong><span>Herramientas IA incluidas</span></div>
-                  <div className="signal-card"><strong>24/7</strong><span>Consultor IA disponible</span></div>
-                  <div className="signal-card"><strong>60 días</strong><span>Sin costo para tu equipo</span></div>
-                  <div className="signal-card"><strong>$0</strong><span>Sin tarjeta requerida</span></div>
-                </div>
+        {/* How it works */}
+        <section className="howto" id="como-funciona">
+          <div className="howto-header">
+            <Reveal delay={0.1}>
+              <h2 className="section-heading">
+                Activa el cerebro de tu empresa<br />en 3 pasos.
+              </h2>
+            </Reveal>
+          </div>
+          <div className="steps">
+            <Reveal delay={0}>
+              <div className="step-card">
+                <div className="step-num">1</div>
+                <h3 className="step-title">Crea tu cuenta sin costo</h3>
+                <p className="step-desc">Regístrate con tu correo. No necesitas tarjeta de crédito ni aprobación de nadie. En 2 minutos estás adentro.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <div className="step-card">
+                <div className="step-num">2</div>
+                <h3 className="step-title">Invita a todo tu equipo</h3>
+                <p className="step-desc">Agrega a todos los que necesites. Sin límite de usuarios durante tus 60 días. Que todos empiecen a usar la plataforma — eso entrena la IA más rápido.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <div className="step-card">
+                <div className="step-num">3</div>
+                <h3 className="step-title">Usa, pregunta, decide — la IA aprende</h3>
+                <p className="step-desc">Cada herramienta que usas, cada pregunta que haces, cada análisis que corres... tu cerebro de IA se vuelve más inteligente sobre tu empresa. En 60 días vas a tener un activo que ningún consultor te puede dar.</p>
               </div>
             </Reveal>
           </div>
+          <Reveal delay={0.25}>
+            <div style={{ textAlign: "center", marginTop: 48 }}>
+              <a href="https://www.plataforma.profit120.com/app/chatbot" className="btn-primary product-cta" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex" }}>
+                Empieza ahora — es gratis
+                <span className="btn-arrow"><ArrowCornerIcon /></span>
+              </a>
+            </div>
+          </Reveal>
         </section>
 
         {/* Testimonials */}
@@ -2797,18 +3482,111 @@ export default function GuestLanding() {
               <Reveal key={i} delay={0.08 * i}>
                 <div className="t-card">
                   <div className="t-stars">{"★".repeat(t.stars)}</div>
+                  {t.result && <div className="t-result">📈 {t.result}</div>}
                   <p className="t-quote">"{t.quote}"</p>
                   <div className="t-author">
-                    <div className="t-avatar">{t.initials}</div>
+                    {t.img
+                      ? <img src={t.img} alt={t.name} className="t-avatar-img" />
+                      : <div className="t-avatar">{t.initials}</div>
+                    }
                     <div>
                       <div className="t-name">{t.name}</div>
                       <div className="t-role">{t.role}</div>
+                      {t.company && <div className="t-company">{t.company}</div>}
                     </div>
                   </div>
                 </div>
               </Reveal>
             ))}
           </div>
+        </section>
+
+        {/* ¿Para quién es? */}
+        <section className="for-whom">
+          <div className="for-whom-header">
+            <Reveal delay={0.05}>
+              <div className="section-eyebrow"><span className="eyebrow-line" />Para quién es<span className="eyebrow-line" /></div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="section-heading">
+                Diseñado para quienes<br />toman decisiones reales.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <p className="section-desc" style={{ margin: "0 auto" }}>
+                Profit120 no es para todos — y eso está bien. Si te identificas con alguno de estos perfiles, es para ti.
+              </p>
+            </Reveal>
+          </div>
+          <div className="for-whom-grid">
+            {[
+              { title: "Dueños de PYME (5–200 empleados)", desc: "Decisiones estratégicas sin consultores caros." },
+              { title: "Directores y gerentes de área", desc: "Datos e IA para Finanzas, Marketing, Ventas y Operaciones — sin analistas." },
+              { title: "Startups en crecimiento", desc: "Haz más con menos. IA especializada, sin setup ni entrenamiento." },
+              { title: "Empresas que escalan sin contratar más", desc: "Automatiza antes de agregar headcount." },
+            ].map((item, i) => (
+              <Reveal key={i} delay={0.08 * i}>
+                <div className="for-whom-card">
+                  <div className="for-whom-check">✓</div>
+                  <div>
+                    <div className="for-whom-title">{item.title}</div>
+                    <div className="for-whom-desc">{item.desc}</div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.1}>
+            <div className="not-for-whom">
+              <div className="not-for-whom-title">No es para ti si eres...</div>
+              <div className="not-for-list">
+                {["Buscas solución mágica sin implementar nada"].map((item, i) => (
+                  <span key={i} className="not-for-item">✕ {item}</span>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </section>
+
+        {/* Comparison table */}
+        <section className="comparison-section">
+          <Reveal delay={0.05}>
+            <div style={{ textAlign: "center", marginBottom: 40 }}>
+              <div className="section-eyebrow" style={{ justifyContent: "center" }}><span className="eyebrow-line" />¿Por qué Profit120?<span className="eyebrow-line" /></div>
+              <h2 className="section-heading" style={{ marginBottom: 12 }}>
+                Compara antes de decidir.
+              </h2>
+              <p className="section-desc" style={{ margin: "0 auto" }}>
+                No somos otra herramienta genérica. Somos el cerebro que aprende de tu empresa.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="comparison-table">
+              <div className="comparison-row comp-header">
+                <div className="comp-tool">Herramienta</div>
+                <div className="comp-price">Precio</div>
+                <div className="comp-learns">¿Aprende de tu empresa?</div>
+              </div>
+              {[
+                { tool: "ChatGPT Pro", price: "$200/mes", learns: "No" },
+                { tool: "Gemini Ultra", price: "$250/mes", learns: "No" },
+                { tool: "MasterClass", price: "$240/año", learns: "No" },
+                { tool: "Udemy Business", price: "$30/mes por persona", learns: "No" },
+              ].map((row, i) => (
+                <div className="comparison-row" key={i}>
+                  <div className="comp-tool">{row.tool}</div>
+                  <div className="comp-price">{row.price}</div>
+                  <div className="comp-learns" style={{ color: BRAND.textMuted }}>✕ {row.learns}</div>
+                </div>
+              ))}
+              <div className="comparison-row comp-highlight">
+                <div className="comp-tool"><img src="/assets/Negro-Verde.png" alt="Profit120" style={{ height: 22, width: "auto", display: "block" }} /></div>
+                <div className="comp-price">$0 por 60 días</div>
+                <div className="comp-learns">✓ +200 herramientas que aprenden de TU empresa</div>
+              </div>
+            </div>
+          </Reveal>
         </section>
 
         {/* Objections */}
@@ -2822,12 +3600,10 @@ export default function GuestLanding() {
           </div>
           <div className="obj-grid">
             {[
-              { q: "¿Necesito tarjeta de crédito?", a: "No. Cero datos de pago. Entras, activas tus 60 días sin costo y listo." },
-              { q: "¿Cuántos usuarios puedo agregar?", a: "Todos los que necesites. La prueba de 60 días es para ti y todo tu equipo, sin límite." },
-              { q: "¿Qué pasa después de los 60 días?", a: "Tú decides si continuar. Sin renovación automática. Sin sorpresas. Sin compromisos." },
-              { q: "¿Y si no me gusta?", a: "Cancela cuando quieras. No hay penalidad, no hay letra chica. Tienes 60 días completos para decidir." },
-              { q: "¿Es para mi tipo de empresa?", a: "Sí. +200 herramientas cubren Finanzas, Marketing, Ventas, RRHH, Operaciones y más. Desde startups hasta empresas consolidadas." },
-              { q: "¿Cuánto tiempo toma empezar?", a: "2 minutos. Solo necesitas un correo. Entras directo a la plataforma con los 5 módulos desbloqueados por 60 días." },
+              { q: "¿Mis datos están seguros?", a: "Sí. Usamos encriptación de extremo a extremo. Tus datos nunca se usan para entrenar modelos externos. Tu información es tuya y solo tuya." },
+              { q: "¿En qué se diferencia de usar ChatGPT o alguna otra IA?", a: "ChatGPT es una IA genérica. Profit120 es un cerebro especializado en negocios: +200 herramientas preconstruidas por expertos, organizadas por área, para que no empieces de cero cada vez. No necesitas saber hacer prompts — solo abrir la herramienta correcta." },
+              { q: "¿Qué pasa después de los 60 días?", a: "Tú decides si continuar. Sin renovación automática. Sin sorpresas. Sin compromisos. Pero tu cerebro de IA ya va a conocer tu empresa... y eso no lo vas a querer soltar." },
+              { q: "¿Necesito tarjeta de crédito?", a: "No. Cero datos de pago. Solo tu correo. Entras, activas tus 60 días sin costo y listo." },
             ].map((obj, i) => (
               <Reveal key={i} delay={0.06 * i}>
                 <div className="obj-card">
@@ -2839,14 +3615,39 @@ export default function GuestLanding() {
           </div>
         </section>
 
+        {/* B2B upsell */}
+        <section className="b2b-upsell">
+          <Reveal delay={0.05}>
+            <div className="b2b-badge">PARA EMPRESAS QUE NECESITAN MÁS</div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h2 className="b2b-headline">¿Tu empresa necesita IA operativa a la medida?</h2>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p className="b2b-desc">Conectamos tus sistemas, construimos agentes de IA que ejecutan por ti y automatizamos tu operación. Todo personalizado para tu empresa.</p>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <div className="b2b-tags">
+              <span className="b2b-tag">CORTEX120 — Datos centralizados</span>
+              <span className="b2b-tag">Agentes de IA — Ventas, soporte, RRHH, finanzas</span>
+              <span className="b2b-tag">Automatizaciones — Procesos que se ejecutan solos</span>
+            </div>
+          </Reveal>
+          <Reveal delay={0.25}>
+            <a href="https://b2b.profit120.com" className="b2b-btn" target="_blank" rel="noopener noreferrer">
+              Conocer Profit120 B2B →
+            </a>
+          </Reveal>
+        </section>
+
         {/* Final CTA */}
         <Reveal>
           <div className="final-cta">
             <h2 className="final-cta-title">
-              Tu empresa merece<br /><span className="green-text">60 días sin costo.</span>
+              Tu empresa merece un cerebro<br /><span className="green-text">que la entienda.</span>
             </h2>
             <p className="final-cta-sub">
-              5 módulos de IA. Todo tu equipo. Sin tarjeta de crédito. Empieza hoy.
+              5 módulos de IA. Todo tu equipo. Sin tarjeta de crédito. 60 días para comprobarlo.
             </p>
             <div className="cta-benefits">
               {["60 días sin costo", "Sin tarjeta de crédito", "Usuarios ilimitados", "5 módulos completos", "Cancela cuando quieras"].map((b, i) => (
@@ -2857,7 +3658,7 @@ export default function GuestLanding() {
               ))}
             </div>
             <a
-              href="https://plataforma.profit120.com/app/chatbot"
+              href="https://www.plataforma.profit120.com/app/chatbot"
               className="btn-primary"
               style={{ fontSize: 18, padding: "20px 48px", minHeight: "auto", flex: "none", animation: "heroCtaPulse 2.2s ease-in-out infinite" }}
               target="_blank"
@@ -2870,10 +3671,50 @@ export default function GuestLanding() {
         </Reveal>
 
         {/* Footer */}
-        <footer className="footer">
-          <span>© {new Date().getFullYear()} Profit120. Todos los derechos reservados.</span>
-          <div className="footer-links">
-            <a href="https://plataforma.profit120.com/app/chatbot" target="_blank" rel="noopener noreferrer">Activa tus 60 días sin costo</a>
+        <footer className="footer-full">
+          <div className="footer-top">
+            <div className="footer-brand">
+              <img src="/assets/Negro-Verde.png" alt="Profit120" />
+              <p>La plataforma de IA para dueños de empresa que quieren decidir y crecer más rápido. 5 módulos. Un solo objetivo.</p>
+              <div className="footer-social">
+                <a href="https://instagram.com/profit_120" target="_blank" rel="noopener noreferrer" title="Instagram">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://linkedin.com/company/profit-120" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="https://www.youtube.com/@Profit120" target="_blank" rel="noopener noreferrer" title="YouTube">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+              </div>
+            </div>
+            <div>
+              <div className="footer-col-title">Plataforma</div>
+              <div className="footer-col-links">
+                <a href="https://www.plataforma.profit120.com/app/tools" target="_blank" rel="noopener noreferrer">Profit BRAIN</a>
+                <a href="https://www.plataforma.profit120.com/app/chatbot" target="_blank" rel="noopener noreferrer">Profit CHAT</a>
+                <a href="https://www.plataforma.profit120.com/app/courses" target="_blank" rel="noopener noreferrer">Profit BOOST</a>
+                <a href="https://www.plataforma.profit120.com/app/library" target="_blank" rel="noopener noreferrer">Profit TALKS</a>
+                <a href="https://www.plataforma.profit120.com/app/labs" target="_blank" rel="noopener noreferrer">Profit LABS</a>
+              </div>
+            </div>
+            <div>
+              <div className="footer-col-title">Legal & Contacto</div>
+              <div className="footer-col-links">
+                <a href="https://profit120.com/privacidad" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>
+                <a href="https://profit120.com/terminos" target="_blank" rel="noopener noreferrer">Términos de Uso</a>
+                <a href="mailto:hola@profit120.com">info@profit120.com</a>
+                <a href="https://www.plataforma.profit120.com/app/chatbot" target="_blank" rel="noopener noreferrer">Activar 60 días sin costo →</a>
+              </div>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <span>© {new Date().getFullYear()} Profit120. Todos los derechos reservados.</span>
+            <div className="footer-legal">
+              <a href="https://profit120.com/privacidad" target="_blank" rel="noopener noreferrer">Privacidad</a>
+              <a href="https://profit120.com/terminos" target="_blank" rel="noopener noreferrer">Términos</a>
+              <a href="mailto:hola@profit120.com">Contacto</a>
+            </div>
           </div>
         </footer>
       </div>
