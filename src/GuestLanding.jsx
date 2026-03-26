@@ -745,6 +745,30 @@ const styles = `
     margin-top: 4px;
   }
 
+  .product-cta-row {
+    margin-top: 22px;
+  }
+
+  .product-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 56px;
+    min-width: 0;
+    padding: 0 22px;
+    border-radius: 18px;
+    font-size: 15px;
+    font-weight: 800;
+    color: #000;
+    text-decoration: none;
+    flex: none;
+    animation: none;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.22),
+      0 10px 20px rgba(39,201,39,0.12);
+  }
+
   .product-feature-item {
     display: flex;
     align-items: center;
@@ -767,19 +791,7 @@ const styles = `
     font-size: 11px;
   }
 
-  .product-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    color: ${BRAND.green};
-    text-decoration: none;
-    margin-top: 8px;
-    transition: gap 0.3s ease;
-  }
-
-  .product-cta:hover { gap: 12px; }
+  .product-cta:hover { gap: 12px; color: #000; }
 
   /* ── Mockup window ── */
   .product-mockup {
@@ -1316,10 +1328,11 @@ const styles = `
     padding: 48px;
     border-radius: 28px;
     background:
-      linear-gradient(180deg, rgba(255,253,248,0.98), rgba(247,245,239,0.92));
-    border: 1px solid rgba(25,23,18,0.08);
+      linear-gradient(180deg, rgba(255,255,255,0.99), rgba(251,252,249,0.97));
+    border: 1px solid rgba(25,23,18,0.06);
     overflow: hidden;
     position: relative;
+    box-shadow: 0 24px 60px rgba(15,23,42,0.04);
   }
 
   .promo-offer-shell::before {
@@ -1400,7 +1413,7 @@ const styles = `
     align-items: flex-start;
     padding: 16px;
     border-radius: 14px;
-    background: rgba(255,255,255,0.65);
+    background: rgba(255,255,255,0.88);
     border: 1px solid rgba(15,23,42,0.06);
     transition: all 0.3s ease;
   }
@@ -1416,12 +1429,12 @@ const styles = `
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: rgba(39,201,39,0.1);
-    border: 1px solid rgba(39,201,39,0.12);
+    background: rgba(39,201,39,0.08);
+    border: 1px solid rgba(39,201,39,0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    color: ${BRAND.greenDim};
     flex-shrink: 0;
   }
 
@@ -1451,10 +1464,10 @@ const styles = `
     border-radius: 20px;
     padding: 24px;
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,245,245,0.92)),
+      linear-gradient(180deg, rgba(255,255,255,0.99), rgba(250,251,248,0.97)),
       ${BRAND.bgAlt};
-    border: 1px solid rgba(25,23,18,0.08);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 20px 50px rgba(15,23,42,0.08);
+    border: 1px solid rgba(25,23,18,0.06);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 20px 50px rgba(15,23,42,0.05);
     position: relative;
     overflow: hidden;
   }
@@ -1691,7 +1704,7 @@ const styles = `
     z-index: 5;
     max-width: 1100px;
     margin: 0 auto;
-    padding: 0 48px 120px;
+    padding: 48px 48px 120px;
   }
 
   .howto-header {
@@ -2101,7 +2114,7 @@ const styles = `
     .promo-offer-shell { grid-template-columns: 1fr; padding: 22px; }
     .promo-points { grid-template-columns: 1fr; }
     .signal-panel { min-height: 320px; }
-    .howto { padding: 0 20px 80px; }
+    .howto { padding: 40px 20px 80px; }
     .steps { grid-template-columns: 1fr; gap: 16px; }
     .steps::before { display: none; }
     .short-inline { padding: 0 20px 36px; }
@@ -2183,8 +2196,8 @@ const marqueeItems = [
 const shorts = [
   {
     title: "Short 1: Que es Profit120",
-    thumbUrl: "https://i.ytimg.com/vi/MMIO5xuowgg/hqdefault.jpg",
-    watchUrl: "https://www.youtube.com/shorts/MMIO5xuowgg",
+    thumbUrl: "https://i.ytimg.com/vi/HswRHEFk6oA/hqdefault.jpg",
+    watchUrl: "https://www.youtube.com/shorts/HswRHEFk6oA",
   },
   {
     title: "Short 2: Promoción 60 días sin costo",
@@ -2243,7 +2256,7 @@ export default function GuestLanding() {
             <a href="#testimonios" className="nav-link">Testimonios</a>
           </div>
           <a
-            href="https://app.profit120.com/guest"
+            href="https://plataforma.profit120.com/app/chatbot"
             className="nav-cta"
             target="_blank"
             rel="noopener noreferrer"
@@ -2278,7 +2291,7 @@ export default function GuestLanding() {
                     </div>
                   </div>
                   <a
-                    href="https://app.profit120.com/guest"
+                    href="https://plataforma.profit120.com/app/chatbot"
                     className="btn-primary"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -2305,7 +2318,7 @@ export default function GuestLanding() {
               <div className="hero-vsl">
                 <div className="hero-vsl-embed">
                   <iframe
-                    src="https://www.youtube.com/embed/MMIO5xuowgg?rel=0&modestbranding=1&playsinline=1"
+                    src="https://www.youtube.com/embed/HswRHEFk6oA?rel=0&modestbranding=1&playsinline=1"
                     title={shorts[0].title}
                     loading="lazy"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -2343,13 +2356,6 @@ export default function GuestLanding() {
         {/* How it works */}
         <section className="howto" id="como-funciona">
           <div className="howto-header">
-            <Reveal>
-              <div className="section-eyebrow">
-                <span className="eyebrow-line" />
-                Cómo funciona
-                <span className="eyebrow-line" />
-              </div>
-            </Reveal>
             <Reveal delay={0.1}>
               <h2 className="section-heading">
                 Empieza en 2 minutos.<br />Sin tarjeta. Sin compromiso.
@@ -2365,7 +2371,7 @@ export default function GuestLanding() {
             <Reveal delay={0}>
               <div className="step-card">
                 <div className="step-num">1</div>
-                <h3 className="step-title">Crea tu cuenta gratis</h3>
+                <h3 className="step-title">Crea tu cuenta sin costo</h3>
                 <p className="step-desc">Regístrate con tu correo. No necesitas tarjeta de crédito ni aprobación de nadie.</p>
               </div>
             </Reveal>
@@ -2389,13 +2395,6 @@ export default function GuestLanding() {
         {/* Products */}
         <section className="features" id="productos">
           <div className="features-header">
-            <Reveal>
-              <div className="section-eyebrow">
-                <span className="eyebrow-line" />
-                Productos
-                <span className="eyebrow-line" />
-              </div>
-            </Reveal>
             <Reveal delay={0.1}>
               <h2 className="section-heading">
                 5 módulos. Un solo objetivo:<br />hacer crecer tu empresa.
@@ -2421,6 +2420,12 @@ export default function GuestLanding() {
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> +200 herramientas por categoría</div>
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Favoritos y recomendaciones personalizadas</div>
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Finanzas, Marketing, Ventas, RRHH y más</div>
+                </div>
+                <div className="product-cta-row">
+                  <a href="https://plataforma.profit120.com/app/tools" className="btn-primary product-cta" target="_blank" rel="noopener noreferrer">
+                    Accede sin costo
+                    <span className="btn-arrow"><ArrowCornerIcon /></span>
+                  </a>
                 </div>
               </div>
               <div className="product-mockup">
@@ -2483,6 +2488,12 @@ export default function GuestLanding() {
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Adjunta archivos para análisis</div>
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Respuestas con contexto empresarial</div>
                 </div>
+                <div className="product-cta-row">
+                  <a href="https://plataforma.profit120.com/app/chatbot" className="btn-primary product-cta" target="_blank" rel="noopener noreferrer">
+                    Accede sin costo
+                    <span className="btn-arrow"><ArrowCornerIcon /></span>
+                  </a>
+                </div>
               </div>
               <div className="product-mockup">
                 <div className="mockup-bar">
@@ -2528,6 +2539,12 @@ export default function GuestLanding() {
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Top 10 en tendencias diarias</div>
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Explorar por categoría</div>
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Frameworks listos para aplicar</div>
+                </div>
+                <div className="product-cta-row">
+                  <a href="https://plataforma.profit120.com/app/courses" className="btn-primary product-cta" target="_blank" rel="noopener noreferrer">
+                    Accede sin costo
+                    <span className="btn-arrow"><ArrowCornerIcon /></span>
+                  </a>
                 </div>
               </div>
               <div className="product-mockup">
@@ -2586,6 +2603,12 @@ export default function GuestLanding() {
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Casos reales de empresas LATAM</div>
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Marcos de decisión aplicables</div>
                 </div>
+                <div className="product-cta-row">
+                  <a href="https://plataforma.profit120.com/app/library" className="btn-primary product-cta" target="_blank" rel="noopener noreferrer">
+                    Accede sin costo
+                    <span className="btn-arrow"><ArrowCornerIcon /></span>
+                  </a>
+                </div>
               </div>
               <div className="product-mockup">
                 <div className="mockup-bar">
@@ -2637,6 +2660,12 @@ export default function GuestLanding() {
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Sesiones en vivo con expertos</div>
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Cupo limitado por sesión</div>
                   <div className="product-feature-item"><span className="product-feature-check">✓</span> Estrategias aplicables inmediatas</div>
+                </div>
+                <div className="product-cta-row">
+                  <a href="https://plataforma.profit120.com/app/labs" className="btn-primary product-cta" target="_blank" rel="noopener noreferrer">
+                    Accede sin costo
+                    <span className="btn-arrow"><ArrowCornerIcon /></span>
+                  </a>
                 </div>
               </div>
               <div className="product-mockup">
@@ -2701,26 +2730,26 @@ export default function GuestLanding() {
               <Reveal delay={0.2}>
                 <div className="promo-points">
                   <div className="promo-point">
-                    <div className="promo-point-icon">🔓</div>
+                    <div className="promo-point-icon"><CheckIcon /></div>
                     <div><strong>Acceso completo</strong><span>Los 5 módulos desbloqueados desde el día 1</span></div>
                   </div>
                   <div className="promo-point">
-                    <div className="promo-point-icon">👥</div>
+                    <div className="promo-point-icon"><CheckIcon /></div>
                     <div><strong>Todo tu equipo</strong><span>Sin límite de usuarios durante la prueba</span></div>
                   </div>
                   <div className="promo-point">
-                    <div className="promo-point-icon">💳</div>
+                    <div className="promo-point-icon"><CheckIcon /></div>
                     <div><strong>Sin tarjeta</strong><span>No pedimos datos de pago para empezar</span></div>
                   </div>
                   <div className="promo-point">
-                    <div className="promo-point-icon">⏰</div>
+                    <div className="promo-point-icon"><CheckIcon /></div>
                     <div><strong>60 días completos</strong><span>No 7. No 14. Sesenta días para probarlo todo.</span></div>
                   </div>
                 </div>
               </Reveal>
               <Reveal delay={0.25}>
-                <a href="https://app.profit120.com/guest" className="btn-primary" style={{ minHeight: 56, minWidth: 200, fontSize: 16, flex: "none" }} target="_blank" rel="noopener noreferrer">
-                  Empieza tus 60 días gratis
+                <a href="https://plataforma.profit120.com/app/chatbot" className="btn-primary" style={{ minHeight: 56, minWidth: 200, fontSize: 16, flex: "none" }} target="_blank" rel="noopener noreferrer">
+                  Empieza tus 60 días sin costo
                   <span className="btn-arrow"><ArrowCornerIcon /></span>
                 </a>
               </Reveal>
@@ -2749,35 +2778,12 @@ export default function GuestLanding() {
           </div>
         </section>
 
-        {/* Inline Short */}
-        <div className="short-inline float-right">
-          <Reveal>
-            <div className="short-embed">
-              <iframe
-                src="https://www.youtube.com/embed/cb7jEJX1i9A?rel=0&modestbranding=1&playsinline=1"
-                title="Promoción 60 días sin costo"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-            </div>
-          </Reveal>
-        </div>
-
         {/* Testimonials */}
         <section className="testimonials" id="testimonios">
           <div className="testimonials-header">
-            <Reveal>
-              <div className="section-eyebrow">
-                <span className="eyebrow-line" />
-                Testimonios
-                <span className="eyebrow-line" />
-              </div>
-            </Reveal>
             <Reveal delay={0.1}>
               <h2 className="section-heading">
-                Empezaron con 60 días gratis.<br />Se quedaron por los resultados.
+                Empezaron con 60 días sin costo.<br />Se quedaron por los resultados.
               </h2>
             </Reveal>
             <Reveal delay={0.15}>
@@ -2808,13 +2814,6 @@ export default function GuestLanding() {
         {/* Objections */}
         <section className="objections">
           <div className="objections-header">
-            <Reveal>
-              <div className="section-eyebrow">
-                <span className="eyebrow-line" />
-                Sin letra chica
-                <span className="eyebrow-line" />
-              </div>
-            </Reveal>
             <Reveal delay={0.1}>
               <h2 className="section-heading">
                 Las preguntas que<br />todos se hacen.
@@ -2858,13 +2857,13 @@ export default function GuestLanding() {
               ))}
             </div>
             <a
-              href="https://app.profit120.com/guest"
+              href="https://plataforma.profit120.com/app/chatbot"
               className="btn-primary"
               style={{ fontSize: 18, padding: "20px 48px", minHeight: "auto", flex: "none", animation: "heroCtaPulse 2.2s ease-in-out infinite" }}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Empieza Gratis — 60 Días
+              Empieza Sin Costo — 60 Días
               <span className="btn-arrow"><ArrowCornerIcon /></span>
             </a>
           </div>
@@ -2874,7 +2873,7 @@ export default function GuestLanding() {
         <footer className="footer">
           <span>© {new Date().getFullYear()} Profit120. Todos los derechos reservados.</span>
           <div className="footer-links">
-            <a href="https://app.profit120.com/guest" target="_blank" rel="noopener noreferrer">Activa tus 60 días sin costo</a>
+            <a href="https://plataforma.profit120.com/app/chatbot" target="_blank" rel="noopener noreferrer">Activa tus 60 días sin costo</a>
           </div>
         </footer>
       </div>
