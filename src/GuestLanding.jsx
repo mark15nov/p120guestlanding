@@ -3191,7 +3191,7 @@ export default function GuestLanding() {
           </div>
           <div className="nav-actions">
             <a
-              href="https://www.plataforma.profit120.com/app/chatbot"
+              href="https://www.plataforma.profit120.com/login"
               className="nav-login"
               target="_blank"
               rel="noopener noreferrer"
@@ -3962,7 +3962,7 @@ export default function GuestLanding() {
               <div className="footer-col-links">
                 <a href="https://plataforma.profit120.com/privacidad" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>
                 <a href="https://plataforma.profit120.com/terminos" target="_blank" rel="noopener noreferrer">Términos de Uso</a>
-                <a href="mailto:hola@profit120.com">info@profit120.com</a>
+                <a href="mailto:info@profit120.com">info@profit120.com</a>
                 <a href="https://www.plataforma.profit120.com/app/chatbot" target="_blank" rel="noopener noreferrer">Activar 60 días sin costo →</a>
               </div>
             </div>
